@@ -5,13 +5,22 @@ import YogaServiceSection from "./components/HomePageComponent/YogaServiceSectio
 import ContactUs from "./components/HomePageComponent/ContactUs";
 import Footer from "./components/AssetComponent/Footer";
 import Navbar from "./components/HomePageComponent/Navbar";
+import PricingSection from "./components/HomePageComponent/PricingSection";
+import NutritionRecipesSection from "./components/HomePageComponent/NutritionRecipesSection";
+import MeditationMusicSection from "./components/HomePageComponent/MeditationMusic";
+import ZenYoga from "./components/HomePageComponent/ZenYoga";
 
 const App = () => {
   return (
     <div className=" mx-auto w-full">
       <Navbar />
-      <HeroBanner /> <YogaSection />
+      <HeroBanner />
+      <YogaSection />
       <YogaServiceSection />
+      <NutritionRecipesSection />
+      <ZenYoga />
+      <MeditationMusicSection />
+      {/* <PricingSection /> */}
       <ContactUs />
       {/* <Routes>
         <Route path="/" element={<Home />} />

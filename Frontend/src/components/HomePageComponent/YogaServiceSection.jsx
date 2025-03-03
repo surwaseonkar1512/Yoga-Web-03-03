@@ -72,6 +72,7 @@ const YogaServiceSection = () => {
         backgroundImage: `url("https://media.istockphoto.com/id/1283380911/photo/yoga-group-on-the-beach-silhouettes-of-people-meditating-in-lotus-position.jpg?s=612x612&w=0&k=20&c=_XCIP5RWTC1nTVZyNRz65d-oGqWOKQR6CWkphD-QV34=")`,
       }}
     >
+      
       {/* Dark Overlay */}
       <div className="absolute inset-0 bg-black opacity-60"></div>
 

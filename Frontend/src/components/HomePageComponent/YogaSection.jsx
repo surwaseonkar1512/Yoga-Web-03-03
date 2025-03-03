@@ -9,15 +9,15 @@ const YogaSection = () => {
       }}
     >
       {/* Left Side - Image */}
-      <div className="relative w-full md:w-1/2 flex justify-center">
-        <div className="relative w-[80%] md:w-[90%]  ">
-          <img
-            src="https://ativo.vamtam.com/wp-content/uploads/2021/07/iStock-924163458.png"
-            alt="Yoga Pose"
-            className="w-full h-auto rounded-md"
-          />
+        <div className="relative w-full md:w-1/2 flex justify-center">
+          <div className="relative w-[80%] md:w-[90%]  ">
+            <img
+              src="https://ativo.vamtam.com/wp-content/uploads/2021/07/iStock-924163458.png"
+              alt="Yoga Pose"
+              className="w-full h-auto rounded-md"
+            />
+          </div>
         </div>
-      </div>
 
       {/* Right Side - Content */}
       <div className="w-full md:w-1/2 text-white md:text-black text-center md:text-left mt-8 md:mt-0 px-4">
