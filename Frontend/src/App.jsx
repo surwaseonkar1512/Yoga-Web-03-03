@@ -3,8 +3,8 @@ import YogaSection from "./components/HomePageComponent/YogaSection";
 import HeroBanner from "./components/HomePageComponent/HeroBanner";
 import YogaServiceSection from "./components/HomePageComponent/YogaServiceSection";
 import ContactUs from "./components/HomePageComponent/ContactUs";
-import Navbar from "./components/AssetComponent/NavBar";
 import Footer from "./components/AssetComponent/Footer";
+import Navbar from "./components/HomePageComponent/Navbar";
 
 const App = () => {
   return (
