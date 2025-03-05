@@ -58,7 +58,10 @@ const YogaCategoryMain = () => {
 
     try {
       setError(null);
-      const response = await axios.post("/api/categories", formData); // Replace with actual API URL
+      const response = await axios.post(
+        "https://yoga-web-03-03.onrender.com/api/categories",
+        formData
+      ); // Replace with actual API URL
 
       if (response.data && response.data.id) {
         setCategories([...categories, response.data]); // Add new category to the list

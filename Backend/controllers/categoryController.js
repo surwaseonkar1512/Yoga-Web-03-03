@@ -1,5 +1,5 @@
-import Category from "../models/Category.js";
-import cloudinary from "cloudinary";
+const Category = require("../models/Category");
+const cloudinary = require("cloudinary").v2;
 
 // Upload Image to Cloudinary Function
 const uploadImageToCloudinary = async (file, folder) => {
@@ -13,7 +13,7 @@ const uploadImageToCloudinary = async (file, folder) => {
 };
 
 // @desc Create a new category
-export const createCategory = async (req, res) => {
+exports.createCategory = async (req, res) => {
   try {
     // Get required fields from request body
     let { name, slug, heading, paragraph } = req.body;
@@ -39,7 +39,10 @@ export const createCategory = async (req, res) => {
     }
 
     // Upload image to Cloudinary
-    const imageUrl = await uploadImageToCloudinary(imageFile, "yoga_categories");
+    const imageUrl = await uploadImageToCloudinary(
+      imageFile,
+      "yoga_categories"
+    );
 
     // Create a new category
     const newCategory = await Category.create({
@@ -60,6 +63,30 @@ export const createCategory = async (req, res) => {
     res.status(500).json({
       success: false,
       message: "Failed to create category",
+      error: error.message,
+    });
+  }
+};
+
+// @desc Get all categories
+exports.getCategories = async (req, res) => {
+  try {
+    const categories = await Category.find();
+    if (!categories.length) {
+      return res.status(404).json({
+        success: false,
+        message: "No categories found",
+      });
+    }
+    res.status(200).json({
+      success: true,
+      data: categories,
+    });
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    res.status(500).json({
+      success: false,
+      message: "Failed to fetch categories",
       error: error.message,
     });
   }
