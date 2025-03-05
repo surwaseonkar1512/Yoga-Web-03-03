@@ -1,4 +1,4 @@
-const BASE_URL = "https://yoga-web-03-03.onrender.com";
+const BASE_URL = "https://yoga-web-03-03.onrender.com/api";
 
 // AUTH ENDPOINTS
 export const endpoints = {

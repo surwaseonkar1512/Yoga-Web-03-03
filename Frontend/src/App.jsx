@@ -7,6 +7,7 @@ import Footer from "./components/AssetComponent/Footer";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import VerifyEmail from "./pages/VerifyEmail";
 // import About from "./pages/About";
 // import Contact from "./pages/Contact";
 // import Meditation from "./pages/Meditation";
@@ -32,6 +33,14 @@ const App = () => {
           element={
             <>
               <Login />
+            </>
+          }
+        />
+        <Route
+          path="verify-email"
+          element={
+            <>
+              <VerifyEmail />
             </>
           }
         />
