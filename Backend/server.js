@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const cors = require("cors");
 const categoryRoutes = require("./routes/categoryRoutes");
 const userRoutes = require("./routes/user");
+const contactUsRoute = require("./routes/Contact");
 
 dotenv.config();
 const app = express();
@@ -26,6 +27,7 @@ app.use(
 app.use(express.json());
 app.use("/api/auth", userRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/reach", contactUsRoute);
 
 mongoose
   .connect(process.env.MONGO_URI, {
