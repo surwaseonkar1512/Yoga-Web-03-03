@@ -5,12 +5,21 @@ const cors = require("cors");
 const categoryRoutes = require("./routes/categoryRoutes");
 const userRoutes = require("./routes/user");
 const contactUsRoute = require("./routes/Contact");
+const fileUpload = require("express-fileupload");
+const { cloudinaryConnect } = require("./config/cloudinary");
 
 dotenv.config();
 const app = express();
 
 // Enable CORS
 app.use(cors());
+app.use(
+  fileUpload({
+    useTempFiles: true,
+    tempFileDir: "/tmp/",
+  })
+);
+cloudinaryConnect();
 
 // OR configure CORS (if you want to allow specific origins)
 app.use(
@@ -28,7 +37,6 @@ app.use(express.json());
 app.use("/api/auth", userRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/reach", contactUsRoute);
-app.use("/api/categories", categoryRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI, {

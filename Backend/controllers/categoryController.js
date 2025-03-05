@@ -1,27 +1,15 @@
 const Category = require("../models/Category");
+const { uploadImageToCloudinary } = require("../utils/imageUploader");
 const cloudinary = require("cloudinary").v2;
 
 // Upload Image to Cloudinary Function
-const uploadImageToCloudinary = async (file, folder) => {
-  try {
-    const options = { folder, resource_type: "auto" };
-    const result = await cloudinary.uploader.upload(file.tempFilePath, options);
-    return result.secure_url; // Get the uploaded image URL
-  } catch (error) {
-    throw new Error("Cloudinary upload failed");
-  }
-};
 
 // @desc Create a new category
 exports.createCategory = async (req, res) => {
   try {
-    // Get required fields from request body
     let { name, slug, heading, paragraph } = req.body;
-
-    // Get the category image from request files
     const imageFile = req.files?.image;
 
-    // Check if required fields are provided
     if (!name || !slug || !heading || !paragraph || !imageFile) {
       return res.status(400).json({
         success: false,
@@ -29,26 +17,24 @@ exports.createCategory = async (req, res) => {
       });
     }
 
-    // Check if a category with the same slug already exists
-    const existingCategory = await Category.findOne({ slug });
-    if (existingCategory) {
-      return res.status(400).json({
-        success: false,
-        message: "Category with this slug already exists",
-      });
-    }
-
-    // Upload image to Cloudinary
+    // ✅ Ensure Cloudinary returns a valid URL
     const imageUrl = await uploadImageToCloudinary(
       imageFile,
       "yoga_categories"
     );
 
-    // Create a new category
+    if (!imageUrl) {
+      return res.status(500).json({
+        success: false,
+        message: "Image upload failed",
+      });
+    }
+
+    // ✅ Store only the secure URL in MongoDB
     const newCategory = await Category.create({
       name,
       slug,
-      image: imageUrl,
+      image: imageUrl, // 🔹 Now this will be a valid string (URL)
       heading,
       paragraph,
     });

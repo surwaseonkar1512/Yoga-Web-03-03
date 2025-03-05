@@ -7,7 +7,7 @@ const YogaCategoryMain = () => {
   const [formData, setFormData] = useState({
     name: "",
     slug: "",
-    image: "",
+    image: null,
     heading: "",
     paragraph: "",
   });
@@ -19,9 +19,11 @@ const YogaCategoryMain = () => {
     const fetchCategories = async () => {
       setLoading(true);
       try {
-        const response = await axios.get("/api/categories"); // Replace with actual API URL
-        if (response.data && Array.isArray(response.data)) {
-          setCategories(response.data);
+        const response = await axios.get(
+          "https://yoga-web-03-03.onrender.com/api/categories/getCategory"
+        );
+        if (response.data && response.data.success) {
+          setCategories(response?.data?.data);
         } else {
           setError("Invalid data format from API");
         }
@@ -34,17 +36,22 @@ const YogaCategoryMain = () => {
     fetchCategories();
   }, []);
 
-  // Handle form input changes
+  // Handle text input changes
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Handle category creation
+  // Handle file input change
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    setFormData((prev) => ({ ...prev, image: file }));
+  };
+
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Basic validation
     if (
       !formData.name ||
       !formData.slug ||
@@ -58,18 +65,27 @@ const YogaCategoryMain = () => {
 
     try {
       setError(null);
-      const response = await axios.post(
-        "https://yoga-web-03-03.onrender.com/api/categories",
-        formData
-      ); // Replace with actual API URL
 
-      if (response.data && response.data.id) {
-        setCategories([...categories, response.data]); // Add new category to the list
+      const data = new FormData();
+      data.append("name", formData.name);
+      data.append("slug", formData.slug);
+      data.append("image", formData.image);
+      data.append("heading", formData.heading);
+      data.append("paragraph", formData.paragraph);
+
+      const response = await axios.post(
+        "https://yoga-web-03-03.onrender.com/api/categories/yogaCategory",
+        data,
+        { headers: { "Content-Type": "multipart/form-data" } }
+      );
+
+      if (response.data && response.data.success) {
+        setCategories([...categories, response.data.data]);
         setShowForm(false);
         setFormData({
           name: "",
           slug: "",
-          image: "",
+          image: null,
           heading: "",
           paragraph: "",
         });
@@ -82,7 +98,7 @@ const YogaCategoryMain = () => {
   };
 
   return (
-    <div className=" p-4">
+    <div className="p-4">
       <div className="flex justify-between items-center mb-4">
         <h2 className="text-xl font-bold">Yoga Categories</h2>
         <button
@@ -118,11 +134,10 @@ const YogaCategoryMain = () => {
               required
             />
             <input
-              type="text"
+              type="file"
               name="image"
-              placeholder="Image URL"
-              value={formData.image}
-              onChange={handleChange}
+              accept="image/*"
+              onChange={handleFileChange}
               className="w-full p-2 border rounded"
               required
             />
@@ -153,32 +168,27 @@ const YogaCategoryMain = () => {
         </div>
       )}
 
-      {loading ? (
-        <div className="text-center text-gray-500">Loading categories...</div>
-      ) : categories.length === 0 ? (
-        <div className="text-center text-gray-500">No categories available</div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {categories.map((category) =>
-            category.id && category.name && category.image ? (
-              <div key={category.id} className="border p-4 rounded-lg shadow">
-                <img
-                  src={category.image}
-                  alt={category.name}
-                  className="w-full h-40 object-cover rounded"
-                />
-                <h3 className="text-lg font-bold mt-2">{category.name}</h3>
-                <p className="text-sm text-gray-600">{category.heading}</p>
-                <p className="text-sm">{category.paragraph}</p>
-              </div>
-            ) : (
-              <div key={category.id || Math.random()} className="text-gray-500">
-                Invalid category data
-              </div>
-            )
-          )}
-        </div>
-      )}
+      {/* ✅ Display categories with createdAt */}
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+        {categories.map((category) => (
+          <div
+            key={category._id}
+            className="border p-4 rounded-lg shadow-md bg-white"
+          >
+            <img
+              src={category.image}
+              alt={category.name}
+              className="w-full h-40 object-cover rounded-lg"
+            />
+            <h3 className="text-lg font-bold mt-2">{category.name}</h3>
+            <p className="text-gray-600">{category.description}</p>
+            <p className="text-sm text-gray-500">
+              Created At: {new Date(category.createdAt).toLocaleString()}{" "}
+              {/* ✅ Format Date */}
+            </p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 };
