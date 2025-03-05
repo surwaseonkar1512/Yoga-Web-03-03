@@ -1,20 +1,14 @@
-import { useState } from "react"
-import { toast } from "react-hot-toast"
-import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai"
-import { useDispatch } from "react-redux"
-import { useNavigate } from "react-router-dom"
-
-import { sendOtp } from "../../../services/operations/authAPI"
-import { setSignupData } from "../../../slices/authSlice"
-import { ACCOUNT_TYPE } from "../../../utils/constants"
-import Tab from "../../Common/Tab"
+import { useState } from "react";
+import { toast } from "react-hot-toast";
+import { AiOutlineEye, AiOutlineEyeInvisible } from "react-icons/ai";
+import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
+import { sendOtp } from "../../services/operations/authAPI";
+import { setSignupData } from "../../slices/authSlice";
 
 function SignupForm() {
-  const navigate = useNavigate()
-  const dispatch = useDispatch()
-
-  // student or instructor
-  const [accountType, setAccountType] = useState(ACCOUNT_TYPE.STUDENT)
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const [formData, setFormData] = useState({
     firstName: "",
@@ -22,174 +16,131 @@ function SignupForm() {
     email: "",
     password: "",
     confirmPassword: "",
-  })
+  });
 
-  const [showPassword, setShowPassword] = useState(false)
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false)
+  const [showPassword, setShowPassword] = useState(false);
+  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
 
-  const { firstName, lastName, email, password, confirmPassword } = formData
+  const { firstName, lastName, email, password, confirmPassword } = formData;
 
-  // Handle input fields, when some value changes
   const handleOnChange = (e) => {
     setFormData((prevData) => ({
       ...prevData,
       [e.target.name]: e.target.value,
-    }))
-  }
+    }));
+  };
 
-  // Handle Form Submission
   const handleOnSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
 
     if (password !== confirmPassword) {
-      toast.error("Passwords Do Not Match")
-      return
-    }
-    const signupData = {
-      ...formData,
-      accountType,
+      toast.error("Passwords do not match");
+      return;
     }
 
-    // Setting signup data to state
-    // To be used after otp verification
-    dispatch(setSignupData(signupData))
-    // Send OTP to user for verification
-    dispatch(sendOtp(formData.email, navigate))
-
-    // Reset
-    setFormData({
-      firstName: "",
-      lastName: "",
-      email: "",
-      password: "",
-      confirmPassword: "",
-    })
-    setAccountType(ACCOUNT_TYPE.STUDENT)
-  }
-
-  // data to pass to Tab component
-  const tabData = [
-    {
-      id: 1,
-      tabName: "Student",
-      type: ACCOUNT_TYPE.STUDENT,
-    },
-    {
-      id: 2,
-      tabName: "Instructor",
-      type: ACCOUNT_TYPE.INSTRUCTOR,
-    },
-  ]
+    dispatch(setSignupData(formData));
+    dispatch(sendOtp(formData.email, navigate));
+  };
 
   return (
-    <div>
-      {/* Tab */}
-      <Tab tabData={tabData} field={accountType} setField={setAccountType} />
-      {/* Form */}
-      <form onSubmit={handleOnSubmit} className="flex w-full flex-col gap-y-4">
-        <div className="flex gap-x-4">
-          <label>
-            <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-              First Name <sup className="text-pink-200">*</sup>
-            </p>
+    <div className="flex items-center justify-center w-full">
+      <div className="max-w-[500px] p-4 lg:p-8">
+        <h1 className="text-richblack-5 font-semibold text-[1.875rem] leading-[2.375rem]">
+          Create Your Account
+        </h1>
+        <p className="text-[1.125rem] leading-[1.625rem] my-4 text-richblack-100">
+          Join us and start Yoga today.
+        </p>
+        <form onSubmit={handleOnSubmit} className="space-y-4">
+          <div className="flex gap-4">
             <input
-              required
               type="text"
               name="firstName"
               value={firstName}
               onChange={handleOnChange}
-              placeholder="Enter first name"
-              className="form-style w-full"
-            />
-          </label>
-          <label>
-            <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-              Last Name <sup className="text-pink-200">*</sup>
-            </p>
-            <input
               required
+              placeholder="First Name"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400"
+            />
+            <input
               type="text"
               name="lastName"
               value={lastName}
               onChange={handleOnChange}
-              placeholder="Enter last name"
-              className="form-style w-full"
+              required
+              placeholder="Last Name"
+              className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400"
             />
-          </label>
-        </div>
-        <label className="w-full">
-          <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-            Email Address <sup className="text-pink-200">*</sup>
-          </p>
+          </div>
           <input
-            required
-            type="text"
+            type="email"
             name="email"
             value={email}
             onChange={handleOnChange}
-            placeholder="Enter email address"
-            className="form-style w-full"
+            required
+            placeholder="Email Address"
+            className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400"
           />
-        </label>
-        <div className="flex gap-x-4">
-          <label className="relative">
-            <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-              Create Password <sup className="text-pink-200">*</sup>
-            </p>
-            <input
-              required
-              type={showPassword ? "text" : "password"}
-              name="password"
-              value={password}
-              onChange={handleOnChange}
-              placeholder="Enter Password"
-              className="form-style w-full !pr-10"
-            />
-            <span
-              onClick={() => setShowPassword((prev) => !prev)}
-              className="absolute right-3 top-[38px] z-[10] cursor-pointer"
-            >
-              {showPassword ? (
-                <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
-              ) : (
-                <AiOutlineEye fontSize={24} fill="#AFB2BF" />
-              )}
-            </span>
-          </label>
-          <label className="relative">
-            <p className="mb-1 text-[0.875rem] leading-[1.375rem] text-richblack-5">
-              Confirm Password <sup className="text-pink-200">*</sup>
-            </p>
-            <input
-              required
-              type={showConfirmPassword ? "text" : "password"}
-              name="confirmPassword"
-              value={confirmPassword}
-              onChange={handleOnChange}
-              placeholder="Confirm Password"
-              className="form-style w-full !pr-10"
-            />
-            <span
-              onClick={() => setShowConfirmPassword((prev) => !prev)}
-              className="absolute right-3 top-[38px] z-[10] cursor-pointer"
-            >
-              {showConfirmPassword ? (
-                <AiOutlineEyeInvisible fontSize={24} fill="#AFB2BF" />
-              ) : (
-                <AiOutlineEye fontSize={24} fill="#AFB2BF" />
-              )}
-            </span>
-          </label>
-        </div>
-        <button
-          type="submit"
-          className="mt-6 rounded-[8px] bg-yellow-50 py-[8px] px-[12px] font-medium text-richblack-900"
-        >
-          Create Account
-        </button>
-      </form>
+          <div className="flex gap-4">
+            <div className="w-full relative">
+              <input
+                type={showPassword ? "text" : "password"}
+                name="password"
+                value={password}
+                onChange={handleOnChange}
+                required
+                placeholder="Password"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400 pr-10"
+              />
+              <span
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute right-3 top-4 cursor-pointer"
+              >
+                {showPassword ? (
+                  <AiOutlineEyeInvisible
+                    fontSize={20}
+                    className="text-gray-500"
+                  />
+                ) : (
+                  <AiOutlineEye fontSize={20} className="text-gray-500" />
+                )}
+              </span>
+            </div>
+            <div className="w-full relative">
+              <input
+                type={showConfirmPassword ? "text" : "password"}
+                name="confirmPassword"
+                value={confirmPassword}
+                onChange={handleOnChange}
+                required
+                placeholder="Confirm Password"
+                className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-400 pr-10"
+              />
+              <span
+                onClick={() => setShowConfirmPassword(!showConfirmPassword)}
+                className="absolute right-3 top-4 cursor-pointer"
+              >
+                {showConfirmPassword ? (
+                  <AiOutlineEyeInvisible
+                    fontSize={20}
+                    className="text-gray-500"
+                  />
+                ) : (
+                  <AiOutlineEye fontSize={20} className="text-gray-500" />
+                )}
+              </span>
+            </div>
+          </div>
+          <button
+            type="submit"
+            className="w-full bg-green-800 text-white py-3 rounded-lg font-medium  transition duration-300"
+          >
+            Create Account
+          </button>
+        </form>
+      </div>
     </div>
-  )
+  );
 }
 
-export default SignupForm
+export default SignupForm;

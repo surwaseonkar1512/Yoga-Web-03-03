@@ -1,5 +1,5 @@
 import React from "react";
-import Navbar from "../components/HomePageComponent/Navbar";
+import Navbar from "../components/AssetComponent/Navbar";
 import HeroBanner from "../components/HomePageComponent/HeroBanner";
 import YogaSection from "../components/HomePageComponent/YogaSection";
 import YogaServiceSection from "../components/HomePageComponent/YogaServiceSection";

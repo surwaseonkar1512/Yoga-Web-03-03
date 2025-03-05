@@ -1,5 +1,4 @@
-import loginImg from "../assets/Images/login2.jpg";
-import Template from "../components/core/Auth/Template";
+import Template from "../components/Auth/Template";
 
 function Login() {
   return (
@@ -7,7 +6,6 @@ function Login() {
       title="Welcome Back"
       description1="Build skills for today, tomorrow, and beyond."
       description2="Education to future-proof your career."
-      image={loginImg}
       formType="login"
     />
   );

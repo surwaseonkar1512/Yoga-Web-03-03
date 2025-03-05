@@ -1,13 +1,14 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
 
-import Navbar from "./components/HomePageComponent/Navbar";
+import Navbar from "./components/AssetComponent/Navbar";
 import Footer from "./components/AssetComponent/Footer";
 
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import VerifyEmail from "./pages/VerifyEmail";
+import ForgotPassword from "./pages/ForgotPassword";
 // import About from "./pages/About";
 // import Contact from "./pages/Contact";
 // import Meditation from "./pages/Meditation";
@@ -36,6 +37,7 @@ const App = () => {
             </>
           }
         />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route
           path="verify-email"
           element={
