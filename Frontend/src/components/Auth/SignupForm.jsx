@@ -38,7 +38,9 @@ function SignupForm() {
       return;
     }
 
-    dispatch(setSignupData(formData));
+    const finalData = { ...formData, accountType: "User" };
+
+    dispatch(setSignupData(finalData));
     dispatch(sendOtp(formData.email, navigate));
   };
 

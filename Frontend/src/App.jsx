@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import VerifyEmail from "./pages/VerifyEmail";
 import ForgotPassword from "./pages/ForgotPassword";
+import AdminDasboard from "./pages/AdminDasboard";
 // import About from "./pages/About";
 // import Contact from "./pages/Contact";
 // import Meditation from "./pages/Meditation";
@@ -23,8 +24,9 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
-        {/* <Route path="/about" element={<About />} />
-        <Route path="/contact" element={<Contact />} />
+        
+        <Route path="/admin-dashBoard" element={<AdminDasboard />} />
+        {/* <Route path="/contact" element={<Contact />} />
         <Route path="/meditation" element={<Meditation />} />
         <Route path="/songs" element={<Songs />} />
         <Route path="/nutrition" element={<Nutrition />} />

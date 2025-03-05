@@ -1,14 +1,9 @@
-const express = require("express");
+import express from "express";
+import { getCategories, createCategory } from "../controllers/categoryController.js";
+
 const router = express.Router();
-const upload = require("../middleware/upload");
-const {
-  createCategory,
-  getAllCategories,
-  getCategoryBySlug
-} = require("../controllers/categoryController");
 
-router.post("/", upload.single("image"), createCategory);
-router.get("/", getAllCategories);
-router.get("/:slug", getCategoryBySlug);
+router.get("/", getCategories);
+router.post("/", createCategory);
 
-module.exports = router;
+export default router;

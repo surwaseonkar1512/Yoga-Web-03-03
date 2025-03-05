@@ -28,6 +28,7 @@ app.use(express.json());
 app.use("/api/auth", userRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/reach", contactUsRoute);
+app.use("/api/categories", categoryRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI, {

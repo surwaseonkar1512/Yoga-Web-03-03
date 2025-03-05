@@ -1,21 +1,14 @@
-const mongoose = require("mongoose");
-const slugify = require("slugify");
+import mongoose from "mongoose";
 
 const CategorySchema = new mongoose.Schema(
   {
-    name: { type: String, required: true, unique: true },
-    description: { type: String, required: true },
+    name: { type: String, required: true },
+    slug: { type: String, required: true, unique: true },
     image: { type: String, required: true },
-    slug: { type: String, unique: true },
-    createdAt: { type: Date, default: Date.now }
+    heading: { type: String, required: true },
+    paragraph: { type: String, required: true },
   },
   { timestamps: true }
 );
 
-// Auto-generate slug before saving
-CategorySchema.pre("save", function (next) {
-  this.slug = slugify(this.name, { lower: true, strict: true });
-  next();
-});
-
-module.exports = mongoose.model("Category", CategorySchema);
+export default mongoose.models.Category || mongoose.model("Category", CategorySchema);
