@@ -5,6 +5,8 @@ import Navbar from "./components/HomePageComponent/Navbar";
 import Footer from "./components/AssetComponent/Footer";
 
 import HomePage from "./pages/HomePage";
+import Login from "./pages/Login";
+import Signup from "./pages/Signup";
 // import About from "./pages/About";
 // import Contact from "./pages/Contact";
 // import Meditation from "./pages/Meditation";
@@ -25,6 +27,22 @@ const App = () => {
         <Route path="/songs" element={<Songs />} />
         <Route path="/nutrition" element={<Nutrition />} />
         <Route path="/yoga-exercise" element={<YogaExercise />} /> */}
+        <Route
+          path="/login"
+          element={
+            <>
+              <Login />
+            </>
+          }
+        />
+        <Route
+          path="/signup"
+          element={
+            <>
+              <Signup />
+            </>
+          }
+        />
       </Routes>
 
       <Footer />

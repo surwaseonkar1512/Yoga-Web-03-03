@@ -1,15 +1,30 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const cors = require("cors");
 const categoryRoutes = require("./routes/categoryRoutes");
 const userRoutes = require("./routes/user");
 
 dotenv.config();
 const app = express();
 
+// Enable CORS
+app.use(cors());
+
+// OR configure CORS (if you want to allow specific origins)
+app.use(
+  cors({
+    origin: [
+      "http://localhost:3000",
+      "https://yoga-web-03-03-amlx.vercel.app/",
+    ], // Add allowed origins
+    methods: ["GET", "POST", "PUT", "DELETE"], // Allowed HTTP methods
+    credentials: true, // Allow credentials (cookies, authorization headers)
+  })
+);
+
 app.use(express.json());
 app.use("/api/auth", userRoutes);
-
 app.use("/api/categories", categoryRoutes);
 
 mongoose
