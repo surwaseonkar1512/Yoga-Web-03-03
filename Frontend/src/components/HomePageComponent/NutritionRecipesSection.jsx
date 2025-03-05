@@ -84,10 +84,10 @@ const NutritionRecipesSection = () => {
   const swiperRef = useRef(null);
 
   return (
-    <section className="relative py-16 bg-white text-white overflow-hidden">
+    <section className="relative md:py-16 py-7 bg-white text-white overflow-hidden">
       {/* Background Shape (Stays Behind Everything) */}
       <div
-        className="absolute inset-0 bg-green-800 "
+        className="absolute inset-0 bg-gradient-to-r from-purple-700 to-pink-500 "
         style={{
           clipPath: "polygon(0 0, 100% 0, 100% 10%, 0 100%)",
         }}
@@ -106,8 +106,8 @@ const NutritionRecipesSection = () => {
         </div>
 
         {/* Slider Section - Positioned in Front */}
-        <div className="grid grid-cols-5">
-          <div className="relative w-full flex flex-col justify-end items-end z-10 col-span-3 gap-3 -right-8">
+        <div className="grid grid-cols-1 md:grid-cols-5">
+          <div className="relative w-full flex flex-col justify-end items-end z-10 col-span-3 gap-3 md:-right-8">
             {/* Swiper Component */}
             <Swiper
               ref={swiperRef}
@@ -120,7 +120,7 @@ const NutritionRecipesSection = () => {
                 768: { slidesPerView: 2 },
                 1024: { slidesPerView: 2 },
               }}
-              className="mt-8 w-full px-6"
+              className="mt-8 w-full md:px-6 px-0"
               onSwiper={(swiper) => (swiperRef.current = swiper)}
             >
               {recipes.map((recipe, index) => (
@@ -165,7 +165,7 @@ const NutritionRecipesSection = () => {
                 <img
                   src="https://templatekit.tokomoo.com/healthfoodkit2/wp-content/uploads/sites/116/2023/01/how-it-works-image-02.png"
                   alt="Yoga Pose"
-                  className="w-full h-[500px] object-contain rounded-md"
+                  className="w-full h-[600px] object-contain rounded-md"
                 />
               </div>
             </div>

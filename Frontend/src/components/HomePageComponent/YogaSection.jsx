@@ -2,65 +2,68 @@ import React from "react";
 
 const YogaSection = () => {
   return (
-    <section
-      className="flex flex-col md:flex-row items-center justify-between bg-white p-8 md:p-16 rounded-lg"
-      style={{
-        backgroundImage: `url("https://img.freepik.com/free-vector/modern-abstract-white-minimal-background_84443-8318.jpg?uid=R164463322&ga=GA1.1.1025254158.1735661044&semt=ais_hybrid")`,
-      }}
-    >
+    <section className="flex flex-col md:flex-row items-center justify-between bg-white p-8 md:p-16 rounded-lg">
       {/* Left Side - Image */}
-        <div className="relative w-full md:w-1/2 flex justify-center">
-          <div className="relative w-[80%] md:w-[90%]  ">
-            <img
-              src="https://ativo.vamtam.com/wp-content/uploads/2021/07/iStock-924163458.png"
-              alt="Yoga Pose"
-              className="w-full h-auto rounded-md"
-            />
-          </div>
+      <div className="relative w-full md:w-1/2 flex justify-center">
+        <div className="relative w-[80%] md:w-[90%]">
+          <img
+            src="https://img.freepik.com/free-vector/silhouette-female-yoga-pose-against-mandala-design_1048-13082.jpg?t=st=1741158464~exp=1741162064~hmac=d47f2606cd49d1b98f8c8f6f5360ccb1f5d2ff526af4dac618591a48ef2b8507&w=900"
+            alt="Yoga Pose"
+            className="w-full h-auto rounded-md"
+          />
         </div>
+      </div>
 
-      {/* Right Side - Content */}
-      <div className="w-full md:w-1/2 text-white md:text-black text-center md:text-left mt-8 md:mt-0 px-4">
-        <h3 className="text-[#F98E78] font-semibold text-sm uppercase">
-          About Yoga Delight
-        </h3>
+      {/* Right Side - About Us Section */}
+      <div className="w-full md:w-1/2 text-black text-center md:text-left mt-8 md:mt-0 px-4">
+        <span className="px-4 py-2 bg-green-800 text-white font-semibold rounded-full">
+          About Us
+        </span>
         <h2 className="text-3xl md:text-5xl font-bold mt-2">
-          Dive Into Yoga Practice at Our Studio
+          Embrace Your Wellness Journey
         </h2>
-        <p className="text-lg mt-4">
-          Our mission is to make the practice of yoga accessible to everyone,
-          regardless of age, ability, or experience level.
+        <p className="text-lg mt-4 text-gray-700">
+          At <span className="font-semibold text-[#F98E78]">Yoga Delight</span>,
+          we provide a sanctuary where you can reconnect with yourself, improve
+          flexibility, and find inner peace. Whether you're a beginner or an
+          advanced practitioner, our diverse classes are designed to help you
+          grow.
         </p>
         <p className="mt-2 text-gray-600">
-          We are committed to providing high-quality instruction, fostering
-          community connections, and empowering individuals to embrace their
-          authentic selves through yoga.
+          Our highly skilled instructors guide you through a transformative
+          journey with personalized attention. We believe yoga is more than just
+          movement—it’s a lifestyle.
         </p>
 
-        {/* Stats Section */}
-        <div className="flex flex-wrap justify-center md:justify-start gap-6 mt-6 text-black">
-          <div className="text-center">
-            <span className="text-2xl font-bold">25k</span>
-            <p className="text-sm text-gray-600">Students</p>
+        {/* Key Features */}
+        <div className="mt-6 space-y-4">
+          <div className="flex items-center gap-4">
+            <span className="text-[#F98E78] text-2xl">🧘‍♀️</span>
+            <p className="text-gray-700">
+              Wide range of classes for all skill levels.
+            </p>
           </div>
-          <div className="text-center">
-            <span className="text-2xl font-bold">100+</span>
-            <p className="text-sm text-gray-600">Courses</p>
+          <div className="flex items-center gap-4">
+            <span className="text-[#F98E78] text-2xl">🌿</span>
+            <p className="text-gray-700">
+              Peaceful & relaxing environment for deep practice.
+            </p>
           </div>
-          <div className="text-center">
-            <span className="text-2xl font-bold">50+</span>
-            <p className="text-sm text-gray-600">Trainers</p>
+          <div className="flex items-center gap-4">
+            <span className="text-[#F98E78] text-2xl">👨‍🏫</span>
+            <p className="text-gray-700">
+              Experienced & certified yoga instructors.
+            </p>
           </div>
-          <div className="text-center">
-            <span className="text-2xl font-bold">35k</span>
-            <p className="text-sm text-gray-600">Reviews</p>
+          <div className="flex items-center gap-4">
+            <span className="text-[#F98E78] text-2xl">💖</span>
+            <p className="text-gray-700">
+              A welcoming community that supports your growth.
+            </p>
           </div>
         </div>
 
         {/* Call-to-Action Button */}
-        <button className="mt-6 bg-[#F98E78] text-white px-6 py-3 rounded-full text-lg font-medium shadow-lg hover:bg-[#E67562] transition">
-          Book Your Free Trial Lesson
-        </button>
       </div>
     </section>
   );

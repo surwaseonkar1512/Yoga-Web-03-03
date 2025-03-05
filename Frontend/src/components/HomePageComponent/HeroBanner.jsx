@@ -27,8 +27,27 @@ const bannerData = [
     pngImage:
       "https://yoge-demo.pbminfotech.com/demo3/wp-content/uploads/sites/4/revslider/slider-demo-03/demo3-slider-2.png",
   },
+  // {
+  //   id: 3,
+  //   background:
+  //     "https://cdn.pixabay.com/photo/2020/08/22/12/36/yoga-5508336_1280.png",
+  //   title: "Find Your Inner Peace.",
+  //   description: "Embrace the journey of self-discovery and mindfulness.",
+  //   buttonText: "Join Now",
+  //   pngImage:
+  //     "https://show.moxcreative.com/aksa/wp-content/uploads/sites/40/2021/12/img_header_.png",
+  // },
+  // {
+  //   id: 4,
+  //   background:
+  //     "https://cdn.pixabay.com/photo/2020/08/22/12/36/yoga-5508336_1280.png",
+  //   title: "Find Your Inner Peace.",
+  //   description: "Embrace the journey of self-discovery and mindfulness.",
+  //   buttonText: "Join Now",
+  //   pngImage:
+  //     "https://templatekit.jegtheme.com/yogafit/wp-content/uploads/sites/367/2023/04/young-woman-practicing-WPDPPXV.png",
+  // },
 ];
-
 const HeroBanner = () => {
   const [scrollY, setScrollY] = useState(0);
   const [smoothScrollY, setSmoothScrollY] = useState(0);
@@ -59,7 +78,7 @@ const HeroBanner = () => {
       <Swiper
         modules={[Autoplay, EffectFade]}
         effect="fade"
-        autoplay={{ delay: 5000, disableOnInteraction: false }}
+        autoplay={{ delay: 4000, disableOnInteraction: false }}
         className="w-full h-full"
       >
         {bannerData.map((banner) => (

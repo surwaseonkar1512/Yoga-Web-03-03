@@ -5,23 +5,29 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
-  // Function to detect scroll and apply blur effect
+  // Detect scroll to apply blur effect
   useEffect(() => {
     const handleScroll = () => {
-      if (window.scrollY > 100) {
-        setIsScrolled(true);
-      } else {
-        setIsScrolled(false);
-      }
+      setIsScrolled(window.scrollY > 100);
     };
 
     window.addEventListener("scroll", handleScroll);
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
+  // Navigation Links (Hardcoded JSON)
+  const navLinks = [
+    { id: 1, name: "Home", link: "/" },
+    { id: 2, name: "About Us", link: "about-us" },
+    { id: 3, name: "Contact Us", link: "contact-us" },
+    { id: 4, name: "MeditationMusic", link: "meditation" },
+    { id: 6, name: "Nutrition", link: "nutrition" },
+    { id: 7, name: "Yoga Exercises", link: "yoga-exercises" },
+  ];
+
   return (
     <nav
-      className={`w-full fixed top-4  z-50 rounded-lg shadow-lg transition duration-300 ${
+      className={`w-full fixed top-4 z-50 rounded-lg shadow-lg transition duration-300 ${
         isScrolled ? "bg-background/60 backdrop-blur-lg" : "bg-background"
       }`}
     >
@@ -31,26 +37,26 @@ const Navbar = () => {
 
         {/* Navigation Menu - Desktop */}
         <ul className="hidden md:flex space-x-6">
-          {["Home", "About", "Classes", "Contact"].map((item) => (
-            <li key={item}>
+          {navLinks.map(({ id, name, link }) => (
+            <li key={id}>
               <a
-                href="#"
-                className="text-primary hover:text-accent transition duration-300"
+                href={link}
+                className="text-green-800 hover:text-accent transition font-bold duration-300"
               >
-                {item}
+                {name}
               </a>
             </li>
           ))}
         </ul>
 
         {/* Login Button */}
-        <button className="bg-accent text-primary px-5 py-2 rounded-lg font-medium hover:bg-background border border-primary transition duration-300 hidden md:block">
+        <button className="bg-green-800 text-white px-5 py-2 rounded-lg font-medium  border border-primary transition duration-300 hidden md:block">
           Login
         </button>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-primary"
+          className="md:hidden text-green-800"
           onClick={() => setIsOpen(!isOpen)}
         >
           {isOpen ? <FaTimes size={24} /> : <FaBars size={24} />}
@@ -60,19 +66,19 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <ul className="md:hidden absolute top-16 left-0 w-full bg-background shadow-lg py-4 space-y-4 text-center">
-          {["Home", "About", "Classes", "Contact"].map((item) => (
-            <li key={item}>
+          {navLinks.map(({ id, name, link }) => (
+            <li key={id}>
               <a
-                href="#"
-                className="text-primary hover:text-accent transition duration-300 text-lg block"
+                href={link}
+                className="text-green-800 hover:text-accent transition duration-300 text-lg block font-bold"
                 onClick={() => setIsOpen(false)}
               >
-                {item}
+                {name}
               </a>
             </li>
           ))}
           <li>
-            <button className="bg-accent text-primary px-5 py-2 rounded-lg font-medium hover:bg-background border border-primary transition duration-300">
+            <button className="bg-green-800 text-white px-5 py-2 rounded-lg font-medium  border border-primary transition duration-300">
               Login
             </button>
           </li>

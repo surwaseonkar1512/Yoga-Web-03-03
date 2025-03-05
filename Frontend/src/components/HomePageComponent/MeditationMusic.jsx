@@ -58,10 +58,16 @@ const MeditationMusicSection = () => {
     return <p className="text-center py-10 text-red-500">Error: {error}</p>;
 
   return (
-    <section className="relative py-16 bg-white text-black overflow-hidden">
+    <section className="relative md:py-16 py-7 bg-gradient-to-r from-purple-700 to-pink-500  text-black overflow-hidden">
+      <div
+        className="absolute -inset-1 bg-white "
+        style={{
+          clipPath: "polygon(0 0, 100% 0, 100% 10%, 0 100%)",
+        }}
+      ></div>{" "}
       <div className="relative container mx-auto px-6 z-10">
         <div className="text-center mb-12">
-          <span className="px-4 py-2 bg-red-400 text-green-900 font-semibold rounded-full">
+          <span className="px-4 py-2 bg-green-800 text-white font-semibold rounded-full">
             MEDITATION MUSIC
           </span>
           <h2 className="text-4xl font-bold mt-4">
@@ -69,8 +75,8 @@ const MeditationMusicSection = () => {
           </h2>
         </div>
 
-        <div className="grid grid-cols-5">
-          <div className="relative w-full flex flex-col justify-end items-end z-10 col-span-3 gap-3 -right-8">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+          <div className="relative w-full flex flex-col justify-end items-end z-10 col-span-3 gap-3 md:-right-8">
             <Swiper
               ref={swiperRef}
               modules={[Autoplay]}
@@ -82,7 +88,7 @@ const MeditationMusicSection = () => {
                 768: { slidesPerView: 2 },
                 1024: { slidesPerView: 2 },
               }}
-              className="mt-8 w-full px-6"
+              className="mt-8 w-full md:px-6 px-0"
               onSwiper={(swiper) => (swiperRef.current = swiper)}
             >
               {songs.map((song, index) => (
@@ -116,16 +122,16 @@ const MeditationMusicSection = () => {
                 </SwiperSlide>
               ))}
             </Swiper>
-            <div className="flex justify-end gap-4 mr-10">
+            <div className="flex justify-end gap-4 md:mr-10 mr-1">
               <button
                 onClick={() => swiperRef.current?.slidePrev()}
-                className="p-3 text-white bg-blue-900 rounded-full shadow-lg"
+                className="p-3 bg-white text-green-800 rounded-full shadow-lg"
               >
                 <FaArrowLeft />
               </button>
               <button
                 onClick={() => swiperRef.current?.slideNext()}
-                className="p-3 text-white bg-blue-900 rounded-full shadow-lg"
+                className="p-3 bg-white text-green-800 rounded-full shadow-lg"
               >
                 <FaArrowRight />
               </button>
@@ -135,7 +141,7 @@ const MeditationMusicSection = () => {
             <div className="relative w-full flex justify-start">
               <div className="relative w-full -mt-20">
                 <img
-                  src="https://yoge-demo.pbminfotech.com/demo1/wp-content/uploads/sites/2/2023/09/img-01.png"
+                  src="https://aonetheme.com/yogar/assets/images/home1/banner/girl.png"
                   alt="Meditation Illustration"
                   className="w-full h-[500px] object-contain rounded-md"
                 />
@@ -144,7 +150,6 @@ const MeditationMusicSection = () => {
           </div>
         </div>
       </div>
-
       {playingSong && (
         <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-white shadow-lg p-4 rounded-lg flex items-center space-x-4 z-50">
           <img

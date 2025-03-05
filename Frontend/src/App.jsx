@@ -1,39 +1,32 @@
 import React from "react";
-import YogaSection from "./components/HomePageComponent/YogaSection";
-import HeroBanner from "./components/HomePageComponent/HeroBanner";
-import YogaServiceSection from "./components/HomePageComponent/YogaServiceSection";
-import ContactUs from "./components/HomePageComponent/ContactUs";
-import Footer from "./components/AssetComponent/Footer";
+import { Routes, Route } from "react-router-dom";
+
 import Navbar from "./components/HomePageComponent/Navbar";
-import PricingSection from "./components/HomePageComponent/PricingSection";
-import NutritionRecipesSection from "./components/HomePageComponent/NutritionRecipesSection";
-import MeditationMusicSection from "./components/HomePageComponent/MeditationMusic";
-import ZenYoga from "./components/HomePageComponent/ZenYoga";
+import Footer from "./components/AssetComponent/Footer";
+
+import HomePage from "./pages/HomePage";
+// import About from "./pages/About";
+// import Contact from "./pages/Contact";
+// import Meditation from "./pages/Meditation";
+// import Songs from "./pages/Songs";
+// import Nutrition from "./pages/Nutrition";
+// import YogaExercise from "./pages/YogaExercise";
 
 const App = () => {
   return (
-    <div className=" mx-auto w-full">
+    <div className="mx-auto w-full">
       <Navbar />
-      <HeroBanner />
-      <YogaSection />
-      <YogaServiceSection />
-      <NutritionRecipesSection />
-      <ZenYoga />
-      <MeditationMusicSection />
-      {/* <PricingSection /> */}
-      <ContactUs />
-      {/* <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/doctors" element={<Doctors />} />
-        <Route path="/doctors/:speciality" element={<Doctors />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/about" element={<About />} />
+
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        {/* <Route path="/about" element={<About />} />
         <Route path="/contact" element={<Contact />} />
-        <Route path="/my-profile" element={<MyProfile />} />
-        <Route path="/my-appointments" element={<MyAppointments />} />
-        <Route path="/appointment/:docId" element={<Appointment />} />
+        <Route path="/meditation" element={<Meditation />} />
+        <Route path="/songs" element={<Songs />} />
+        <Route path="/nutrition" element={<Nutrition />} />
+        <Route path="/yoga-exercise" element={<YogaExercise />} /> */}
       </Routes>
-      */}
+
       <Footer />
     </div>
   );
