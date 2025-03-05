@@ -54,11 +54,9 @@ const YogaScheduleTable = () => {
     <div className="flex flex-col items-center justify-center w-full py-8">
       <div className="text-center mb-12">
         <span className="px-4 py-2 bg-green-800 text-white font-semibold rounded-full">
-          HEALTHY RECIPES
+          TIME TABLE
         </span>
-        <h2 className="text-4xl font-bold mt-4">
-          Discover Nutritious & Delicious Recipes
-        </h2>
+        <h2 className="text-4xl font-bold mt-4">Set Your Schedules</h2>
       </div>{" "}
       <div className="w-full overflow-x-auto p-6">
         <motion.table
