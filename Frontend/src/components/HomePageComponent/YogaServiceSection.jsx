@@ -1,69 +1,29 @@
-import React, { useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper/modules";
 import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 import "swiper/css";
 import "swiper/css/autoplay";
+import { getCategories } from "../../services/operations/YogaCategory";
+import { Link } from "react-router-dom";
 
-const services = [
-  {
-    title: "Vrikshasana",
-    trainer: "Hatha Yoga Trainer",
-    image:
-      "https://designingmedia.com/yogadelight/wp-content/uploads/2024/06/Yoga-img-3.jpg",
-  },
-  {
-    title: "Dhanurasana",
-    trainer: "Power Yoga Trainer",
-    image:
-      "https://yoge-demo.pbminfotech.com/demo3/wp-content/uploads/sites/4/2023/08/blog-img-01.jpg",
-  },
-  {
-    title: "Bhujangasana",
-    trainer: "Ashtanga Yoga Trainer",
-    image:
-      "https://designingmedia.com/yogastic/wp-content/uploads/2023/03/blog4-1.jpg",
-  },
-  {
-    title: "Vrikshasana",
-    trainer: "Hatha Yoga Trainer",
-    image:
-      "https://designingmedia.com/yogadelight/wp-content/uploads/2024/06/Yoga-img-3.jpg",
-  },
-  {
-    title: "Dhanurasana",
-    trainer: "Power Yoga Trainer",
-    image:
-      "https://yoge-demo.pbminfotech.com/demo3/wp-content/uploads/sites/4/2023/08/blog-img-01.jpg",
-  },
-  {
-    title: "Bhujangasana",
-    trainer: "Ashtanga Yoga Trainer",
-    image:
-      "https://designingmedia.com/yogastic/wp-content/uploads/2023/03/blog4-1.jpg",
-  },
-  {
-    title: "Vrikshasana",
-    trainer: "Hatha Yoga Trainer",
-    image:
-      "https://designingmedia.com/yogadelight/wp-content/uploads/2024/06/Yoga-img-3.jpg",
-  },
-  {
-    title: "Dhanurasana",
-    trainer: "Power Yoga Trainer",
-    image:
-      "https://yoge-demo.pbminfotech.com/demo3/wp-content/uploads/sites/4/2023/08/blog-img-01.jpg",
-  },
-  {
-    title: "Bhujangasana",
-    trainer: "Ashtanga Yoga Trainer",
-    image:
-      "https://designingmedia.com/yogastic/wp-content/uploads/2023/03/blog4-1.jpg",
-  },
-];
+
 
 const YogaServiceSection = () => {
+  const [categories, setCategories] = useState([]);
   const swiperRef = useRef(null);
+  useEffect(() => {
+    const fetchCategories = async () => {
+      const response = await getCategories();
+      if (response.success) {
+        setCategories(response.data);
+      } else {
+        // setError("Error fetching categories");
+      }
+    };
+    fetchCategories();
+  }, []);
+  console.log("categories", categories);
 
   return (
     <>
@@ -106,25 +66,38 @@ const YogaServiceSection = () => {
                 className="mt-8 w-full md:px-6 px-0"
                 onSwiper={(swiper) => (swiperRef.current = swiper)}
               >
-                {services.map((service, index) => (
+                {categories.map((service, index) => (
                   <SwiperSlide key={index}>
-                    <div className="relative w-full max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg bg-white text-black">
-                      <img
-                        src={service.image}
-                        alt={service.title}
-                        className="w-full h-72 object-cover"
-                      />
-                      <div className="absolute top-4 left-4 bg-white text-black px-3 py-1 text-sm font-bold rounded-full">
-                        {service.trainer}
+                    <div className="relative w-full max-w-sm mx-auto rounded-lg overflow-hidden   text-black transition-transform duration-300 hover:scale-105 hover:shadow-2xl my-4">
+                      {/* Image Section */}
+                      <div className="relative w-full h-72 overflow-hidden">
+                        <img
+                          src={service.image}
+                          alt={service.title}
+                          className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                        />
+                        <div className="absolute top-4 left-4 bg-white text-black px-3 py-1 text-sm font-bold rounded-full shadow-md">
+                          {service.name}
+                        </div>
                       </div>
-                      <div className="p-4">
-                        <h3 className="text-xl font-semibold">
-                          {service.title}
+
+                      {/* Content Section */}
+                      <div className="p-4 space-y-2 bg-white">
+                        <h3 className="text-sm font-semibold text-gray-800">
+                          {service.heading}
                         </h3>
+                        <p className="text-sm text-gray-600 line-clamp-3">
+                          {service?.paragraph}
+                        </p>
                       </div>
-                      <div className="absolute bottom-4 right-4 bg-white p-2 rounded-full">
-                        <FaArrowRight className="text-green-900" />
-                      </div>
+
+                      {/* Button - Positioned Properly */}
+                      <Link
+                        to={`/yogaCategroy/${service?.slug}`}
+                        className="absolute bottom-32 right-4 bg-green-800 p-3 rounded-full shadow-lg transition-all duration-300 hover:bg-green-600 hover:scale-110"
+                      >
+                        <FaArrowRight className="text-white text-lg -rotate-45" />
+                      </Link>
                     </div>
                   </SwiperSlide>
                 ))}

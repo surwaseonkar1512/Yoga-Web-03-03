@@ -10,8 +10,11 @@ import ZenYoga from "../components/HomePageComponent/ZenYoga";
 import MeditationMusicSection from "../components/HomePageComponent/MeditationMusic";
 import ContactUs from "../components/HomePageComponent/ContactUs";
 import WellnessSection from "../components/HomePageComponent/WellnessSection";
+import { useSelector } from "react-redux";
 
 const HomePage = () => {
+  const { user } = useSelector((state) => state.profile);
+  console.log("user", user);
   return (
     <div className=" mx-auto w-full">
       <HeroBanner />

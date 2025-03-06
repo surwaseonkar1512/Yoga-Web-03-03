@@ -1,13 +1,14 @@
 import React, { useState, useEffect } from "react";
-
-import { Trash2, TrendingUp } from "lucide-react";
 import {
-  createNutrition,
-  getNutrition,
-} from "../../../services/operations/NutritionCategroy";
+  createCategory,
+  deleteCategory,
+  getCategories,
+} from "../../../services/operations/YogaCategory";
+import { Trash2, TrendingUp } from "lucide-react";
+import { deleteNutrition } from "../../../services/operations/NutritionCategroy";
 
-const NutritionMain = () => {
-  const [Nutrition, setNutrition] = useState([]);
+const YogaCategoryMainComponent = () => {
+  const [categories, setCategories] = useState([]);
   const [showForm, setShowForm] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
@@ -19,19 +20,19 @@ const NutritionMain = () => {
   const [error, setError] = useState(null);
   const [loading, setLoading] = useState(false);
 
-  // Fetch Nutrition from API
+  // Fetch categories from API
   useEffect(() => {
-    const fetchNutrition = async () => {
+    const fetchCategories = async () => {
       setLoading(true);
-      const response = await getNutrition();
+      const response = await getCategories();
       if (response.success) {
-        setNutrition(response.data);
+        setCategories(response.data);
       } else {
-        setError("Error fetching Nutrition");
+        setError("Error fetching categories");
       }
       setLoading(false);
     };
-    fetchNutrition();
+    fetchCategories();
   }, []);
 
   // Function to generate slug from name
@@ -77,9 +78,9 @@ const NutritionMain = () => {
     }
     setError(null);
 
-    const response = await createNutrition(formData);
+    const response = await createNutritaion(formData);
     if (response.success) {
-      setNutrition([...Nutrition, response.data]);
+      setCategories([...categories, response.data]);
       setLoading(false);
 
       setShowForm(false);
@@ -99,9 +100,9 @@ const NutritionMain = () => {
   // Handle delete category
   const handleDelete = async (categoryId) => {
     setLoading(true);
-    const response = await deleteCategory(categoryId);
+    const response = await deleteNutrition(categoryId);
     if (response.success) {
-      setNutrition(Nutrition.filter((cat) => cat._id !== categoryId));
+      setCategories(categories.filter((cat) => cat._id !== categoryId));
       setLoading(false);
     } else {
       setLoading(false);
@@ -113,7 +114,7 @@ const NutritionMain = () => {
       className={`  px-4  ${loading ? "opacity-50 pointer-events-none" : ""}`}
     >
       <div className="flex justify-between items-center mb-4">
-        <h2 className="text-xl font-bold">Yoga Nutrition</h2>
+        <h2 className="text-xl font-bold">Yoga Categories</h2>
         <button
           className="bg-green-800 text-white px-4 py-2 rounded-full text-lg"
           onClick={() => setShowForm(!showForm)}
@@ -175,7 +176,7 @@ const NutritionMain = () => {
       )}
 
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-        {Nutrition.map((category) => (
+        {categories.map((category) => (
           <div
             key={category._id}
             className="relative border p-4 rounded-xl shadow-lg bg-white hover:shadow-xl transition-shadow duration-300"
@@ -215,4 +216,4 @@ const NutritionMain = () => {
   );
 };
 
-export default NutritionMain;
+export default YogaCategoryMainComponent;

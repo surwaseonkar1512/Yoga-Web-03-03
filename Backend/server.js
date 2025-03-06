@@ -3,6 +3,8 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const categoryRoutes = require("./routes/categoryRoutes");
+const nutritionRoutes= require("./routes/NutritaionRoutes");
+
 const userRoutes = require("./routes/user");
 const contactUsRoute = require("./routes/Contact");
 const fileUpload = require("express-fileupload");
@@ -36,6 +38,7 @@ app.use(
 app.use(express.json());
 app.use("/api/auth", userRoutes);
 app.use("/api/categories", categoryRoutes);
+app.use("/api/nutrition", nutritionRoutes);
 app.use("/api/reach", contactUsRoute);
 
 mongoose

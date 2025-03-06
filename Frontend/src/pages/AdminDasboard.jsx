@@ -1,60 +1,74 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import {
-  FaList,
-  FaAppleAlt,
-  FaMusic,
-  FaSearch,
-  FaCog,
-  FaBell,
-  FaUser,
-} from "react-icons/fa";
-import YogaCategoryMain from "../components/AdminDashBoard/YogaCategoryComponent/YogaCategoryMain";
+import { FaList, FaAppleAlt, FaMusic } from "react-icons/fa";
+import YogaCategoryMain from "../components/AdminDashBoard/YogaCategoryComponent/YogaCategoryMainComponent";
+import NutritionMain from "../components/AdminDashBoard/NutritionComponent/NutritionMain";
+import { GrYoga } from "react-icons/gr";
+import { MdOutlineFoodBank } from "react-icons/md";
 
 const menuItems = [
   {
     id: "category",
     Component: <YogaCategoryMain />,
-    name: "Category",
+    name: "Yoga Category",
     icon: FaList,
   },
   {
     id: "nutrition",
-    Component: <YogaCategoryMain />,
+    Component: <NutritionMain />,
     name: "Nutrition",
     icon: FaAppleAlt,
   },
   {
-    id: "music",
+    id: "yoga",
     Component: <YogaCategoryMain />,
-    name: "Music",
-    icon: FaMusic,
+    name: "Yoga",
+    icon: GrYoga,
+  },
+  {
+    id: "nutrition recipe",
+    Component: <YogaCategoryMain />,
+    name: "Recipe",
+    icon: MdOutlineFoodBank,
   },
 ];
 
 const AdminDashboard = () => {
   const { user } = useSelector((state) => state.profile);
   const navigate = useNavigate();
-  const [selectedMenu, setSelectedMenu] = useState(menuItems?.[0]); // Default selected menu
-
+  const [selectedMenu, setSelectedMenu] = useState(menuItems[0]); // Default selected menu
+  const [loading, setLoading] = useState(true);
+  const { token } = useSelector((state) => state.auth);
+  const { accountType } = useSelector((state) => state.auth);
+  console.log("token", token);
+  console.log("accountType", accountType);
   useEffect(() => {
-    if (!user?.token) {
+    if (user === undefined) return; // Wait until user data is loaded
+
+    setLoading(false); // Stop loading when user data is available
+
+    if (!token) {
       navigate("/login");
-    } else if (user?.accountType !== "Admin") {
-      navigate("/profile");
+    } else if (accountType !== "Admin") {
+      console.log("accountType", accountType);
+      // navigate("/profile");
     }
   }, [user, navigate]);
 
-  if (!user?.token || user?.accountType !== "Admin") {
-    return null;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        Loading...
+      </div>
+    );
   }
 
   return (
     <div className="flex h-screen bg-gray-100 pt-28">
       {/* Sidebar */}
       <aside className="w-64 bg-green-900 text-white p-5 flex flex-col">
-        <h1 className="text-2xl font-bold mb-6"> Dashboard</h1>
+        <h1 className="text-2xl font-bold mb-6">Dashboard</h1>
         <nav className="space-y-4">
           {menuItems.map((item) => {
             const Icon = item.icon;
@@ -76,27 +90,6 @@ const AdminDashboard = () => {
 
       {/* Main Content */}
       <div className="flex-1 flex flex-col">
-        {/* Navbar */}
-        <header className="bg-white shadow p-4 flex justify-between items-center">
-          <div className="relative w-1/3">
-            <FaSearch className="absolute left-3 top-3 text-gray-400" />
-            <input
-              type="text"
-              placeholder="Search"
-              className="pl-10 pr-4 py-2 w-full border rounded"
-            />
-          </div>
-          <div className="flex items-center space-x-4">
-            <FaBell className="text-gray-600" />
-            <FaCog className="text-gray-600" />
-            <div className="flex items-center space-x-2">
-              <FaUser className="text-gray-600" />
-              <span>Admin</span>
-            </div>
-          </div>
-        </header>
-
-        {/* Content */}
         <main className="overflow-y-auto p-6">{selectedMenu?.Component}</main>
       </div>
     </div>

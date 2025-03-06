@@ -170,6 +170,19 @@ const MeditationMusicSection = () => {
           >
             <source src={playingSong.downloadUrl[0]?.url} type="audio/mpeg" />
           </audio>
+          <button
+            onClick={() => {
+              if (currentAudio) {
+                currentAudio.pause();
+                currentAudio.currentTime = 0;
+              }
+              setPlayingSong(null);
+              setCurrentAudio(null);
+            }}
+            className="p-2  text-green-800 rounded-full"
+          >
+            ✖
+          </button>
         </div>
       )}
     </section>

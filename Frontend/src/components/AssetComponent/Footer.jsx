@@ -15,7 +15,7 @@ const Footer = () => {
           {/* About Section */}
           <div>
             <h2 className="text-2xl font-bold flex items-center space-x-2">
-              <span className="text-white">YogaFlow</span>
+              <span className="text-white">Yogahar </span>
             </h2>
             <p className="text-gray-400 mt-3 leading-relaxed">
               Far far away, behind the word mountains, far from countries
@@ -66,7 +66,7 @@ const Footer = () => {
             </div>
             <div className="flex items-center mt-2 space-x-2">
               <MdEmail className="text-gray-400" />
-              <p className="text-gray-400">contact@YogaFlowyoga.co</p>
+              <p className="text-gray-400">contact@Yogahar yoga.co</p>
             </div>
           </div>
         </div>

@@ -33,12 +33,13 @@ const Navbar = () => {
     { id: 7, name: "Yoga Exercises", link: "/yoga-exercises" },
   ];
 
-  // Logout function
   const handleLogout = () => {
     dispatch(setToken(null));
     dispatch(setUser(null));
     localStorage.removeItem("token");
     localStorage.removeItem("user");
+    localStorage.removeItem("accountType");
+
     toast.success("Logged Out");
     console.log("User logged out");
 
@@ -54,7 +55,7 @@ const Navbar = () => {
     >
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
         {/* Logo */}
-        <div className="text-textPrimary text-2xl font-bold">YogaFlow</div>
+        <div className="text-textPrimary text-2xl font-bold">Yogahar </div>
 
         {/* Navigation Menu - Desktop */}
         <ul className="hidden md:flex space-x-6">
