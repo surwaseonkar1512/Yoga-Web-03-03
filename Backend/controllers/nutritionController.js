@@ -1,4 +1,4 @@
-const Nutrition = require("../models/Nutritiaon");
+const Nutrition = require("../models/Nutrition");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 const cloudinary = require("cloudinary").v2;
 
@@ -84,19 +84,21 @@ exports.deleteNutrition = async (req, res) => {
     const { id } = req.params;
 
     // Check if Nutrition exists
-    const Nutrition = await Nutrition.findById(id);
-    if (!Nutrition) {
+    const nutrition = await Nutrition.findById(id);
+    if (!nutrition) {
       return res.status(404).json({
         success: false,
         message: "Nutrition not found",
       });
     }
 
-    // Delete Nutrition image from Cloudinary
-    const imagePublicId = Nutrition.image.split("/").pop().split(".")[0];
-    await cloudinary.uploader.destroy(`yoga_categories/${imagePublicId}`);
+    // Extract Public ID from Image URL
+    const imagePublicId = nutrition.image.split("/").pop().split(".")[0];
 
-    // Delete Nutrition from database
+    // Delete Image from Cloudinary
+    await cloudinary.uploader.destroy(`nutrition_category/${imagePublicId}`);
+
+    // Delete Nutrition from Database
     await Nutrition.findByIdAndDelete(id);
 
     res.status(200).json({

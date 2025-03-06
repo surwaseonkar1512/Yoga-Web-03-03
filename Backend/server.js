@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const categoryRoutes = require("./routes/categoryRoutes");
-const nutritionRoutes= require("./routes/NutritaionRoutes");
+const NutritionRoutes = require("./routes/NutritionRoutes");
+const yogaRoutes = require("./routes/yogaRoutes");
 
 const userRoutes = require("./routes/user");
 const contactUsRoute = require("./routes/Contact");
@@ -38,8 +39,10 @@ app.use(
 app.use(express.json());
 app.use("/api/auth", userRoutes);
 app.use("/api/categories", categoryRoutes);
-app.use("/api/nutrition", nutritionRoutes);
+app.use("/api/nutrition", NutritionRoutes);
 app.use("/api/reach", contactUsRoute);
+
+app.use("/api/yogas", yogaRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI, {

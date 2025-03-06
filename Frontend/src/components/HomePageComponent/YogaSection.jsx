@@ -23,7 +23,7 @@ const YogaSection = () => {
           Embrace Your Wellness Journey
         </h2>
         <p className="text-lg mt-4 text-gray-700">
-          At <span className="font-semibold text-[#F98E78]">Yoga Delight</span>,
+          At <span className="font-semibold text-[#F98E78]">Yogahar</span>,
           we provide a sanctuary where you can reconnect with yourself, improve
           flexibility, and find inner peace. Whether you're a beginner or an
           advanced practitioner, our diverse classes are designed to help you

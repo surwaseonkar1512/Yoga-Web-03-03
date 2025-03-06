@@ -4,8 +4,7 @@ import {
   deleteCategory,
   getCategories,
 } from "../../../services/operations/YogaCategory";
-import { Trash2, TrendingUp } from "lucide-react";
-import { deleteNutrition } from "../../../services/operations/NutritionCategroy";
+import { Trash2 } from "lucide-react";
 
 const YogaCategoryMainComponent = () => {
   const [categories, setCategories] = useState([]);
@@ -78,7 +77,7 @@ const YogaCategoryMainComponent = () => {
     }
     setError(null);
 
-    const response = await createNutritaion(formData);
+    const response = await createCategory(formData);
     if (response.success) {
       setCategories([...categories, response.data]);
       setLoading(false);
@@ -100,7 +99,7 @@ const YogaCategoryMainComponent = () => {
   // Handle delete category
   const handleDelete = async (categoryId) => {
     setLoading(true);
-    const response = await deleteNutrition(categoryId);
+    const response = await deleteCategory(categoryId);
     if (response.success) {
       setCategories(categories.filter((cat) => cat._id !== categoryId));
       setLoading(false);

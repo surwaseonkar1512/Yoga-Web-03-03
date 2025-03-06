@@ -6,6 +6,7 @@ import YogaCategoryMain from "../components/AdminDashBoard/YogaCategoryComponent
 import NutritionMain from "../components/AdminDashBoard/NutritionComponent/NutritionMain";
 import { GrYoga } from "react-icons/gr";
 import { MdOutlineFoodBank } from "react-icons/md";
+import YogaForm from "../components/AdminDashBoard/YogaCategoryComponent/YogaForm";
 
 const menuItems = [
   {
@@ -22,7 +23,7 @@ const menuItems = [
   },
   {
     id: "yoga",
-    Component: <YogaCategoryMain />,
+    Component: <YogaForm />,
     name: "Yoga",
     icon: GrYoga,
   },

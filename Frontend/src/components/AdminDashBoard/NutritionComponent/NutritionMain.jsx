@@ -3,6 +3,7 @@ import React, { useState, useEffect } from "react";
 import { Trash2, TrendingUp } from "lucide-react";
 import {
   createNutrition,
+  deleteNutrition,
   getNutrition,
 } from "../../../services/operations/NutritionCategroy";
 
@@ -99,7 +100,7 @@ const NutritionMain = () => {
   // Handle delete category
   const handleDelete = async (categoryId) => {
     setLoading(true);
-    const response = await deleteCategory(categoryId);
+    const response = await deleteNutrition(categoryId);
     if (response.success) {
       setNutrition(Nutrition.filter((cat) => cat._id !== categoryId));
       setLoading(false);
