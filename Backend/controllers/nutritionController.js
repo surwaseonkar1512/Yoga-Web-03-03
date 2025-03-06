@@ -1,4 +1,4 @@
-const Nutrition = require("../models/Nutrition");
+const Nutrition = require("../models/Nutritiaon");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 const cloudinary = require("cloudinary").v2;
 
