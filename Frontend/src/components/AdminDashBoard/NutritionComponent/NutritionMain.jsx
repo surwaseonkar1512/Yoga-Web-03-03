@@ -119,7 +119,7 @@ const NutritionMain = () => {
           className="bg-green-800 text-white px-4 py-2 rounded-full text-lg"
           onClick={() => setShowForm(!showForm)}
         >
-          Create +
+          {showForm ? "Cancel" : "Create +"}
         </button>
       </div>
 

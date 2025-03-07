@@ -7,8 +7,6 @@ import "swiper/css/autoplay";
 import { getCategories } from "../../services/operations/YogaCategory";
 import { Link } from "react-router-dom";
 
-
-
 const YogaServiceSection = () => {
   const [categories, setCategories] = useState([]);
   const swiperRef = useRef(null);
@@ -41,7 +39,7 @@ const YogaServiceSection = () => {
           {/* Section Header */}
           <div className="text-center mb-12">
             <span className="px-4 py-2 bg-white text-green-900 font-semibold rounded-full">
-              NEW SERVICE
+              Yoga Practices
             </span>
             <h2 className="text-4xl font-bold mt-4">
               Explore More Yoga Practices
