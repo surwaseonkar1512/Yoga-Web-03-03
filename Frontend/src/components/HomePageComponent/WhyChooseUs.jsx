@@ -46,7 +46,7 @@ const WhyChooseUs = () => {
           YOGA FLOW
         </span>
         <h2 className="text-3xl md:text-5xl font-bold mt-2">
-          Dive Into Yoga Practice at Our Studio
+          Dive Into Yoga Practice at Yogahar
         </h2>
         <p className="text-lg mt-4">
           Our mission is to make the practice of yoga accessible to everyone,

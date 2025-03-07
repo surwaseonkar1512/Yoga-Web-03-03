@@ -59,7 +59,7 @@ const Footer = () => {
           <div>
             <h3 className="text-lg font-semibold">Contact Info</h3>
             <p className="text-gray-400 mt-3">1810 Kings Way</p>
-            <p className="text-gray-400">King Street, 5th Avenue, New York</p>
+            <p className="text-gray-400">Marine Drive, 3rd Floor, Mumbai</p>
             <div className="flex items-center mt-3 space-x-2">
               <MdCall className="text-gray-400" />
               <p className="text-gray-400">1800-2355-2356</p>

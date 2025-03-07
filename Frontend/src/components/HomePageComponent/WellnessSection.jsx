@@ -6,28 +6,28 @@ const WellnessSection = () => {
     {
       title: "Meditation",
       description:
-        "Dui sapien eget mi proin sed libero. Sit amet massa vitae tortor condimentum.",
+        "A practice that helps calm the mind, reduce stress, and enhance overall well-being.",
       image:
         "https://img.freepik.com/free-vector/asian-man-cartoon-practice-meditation_1308-146267.jpg?uid=R164463322&ga=GA1.1.1025254158.1735661044&semt=ais_hybrid",
     },
     {
       title: "Aromatherapy",
       description:
-        "Turpis egestas maecenas pharetra sagittis orci a scelerisque convallis.",
+        "A healing technique using essential oils to promote relaxation and emotional balance.",
       image:
         "https://img.freepik.com/premium-vector/sports-fitness-yoga-3d-physical-culture-nutrition-sports-isolated-icons-objects-vegetables-with-girl-transparent-background_162862-1348.jpg?uid=R164463322&ga=GA1.1.1025254158.1735661044&semt=ais_hybrid",
     },
     {
       title: "Yoga Asanas",
       description:
-        "Augue eget arcu dictum varius duis at aliquam eleifend consectetur lorem.",
+        "Physical postures and exercises that improve flexibility, strength, and mental clarity.",
       image:
         "https://img.freepik.com/free-vector/girl-doing-yoga-cartoon-character_1308-118198.jpg?uid=R164463322&ga=GA1.1.1025254158.1735661044&semt=ais_hybrid",
     },
     {
       title: "Sound Therapy",
       description:
-        "Ut enim blandit volutpat maecenas ultrices eros volutpat blandit.",
+        "A method of healing that uses sound frequencies to reduce stress and enhance relaxation.",
       image:
         "https://img.freepik.com/premium-vector/boy-guy-young-man-sitting-cross-legged-meditating-listening-music-headphones_463755-168.jpg?uid=R164463322&ga=GA1.1.1025254158.1735661044&semt=ais_hybrid",
     },
