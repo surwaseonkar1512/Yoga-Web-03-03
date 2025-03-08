@@ -2,17 +2,15 @@ const mongoose = require("mongoose");
 
 const YogaSchema = new mongoose.Schema({
   category: {
-    // type: mongoose.Schema.Types.ObjectId,
-    // ref: "Category", // Reference to Yoga Category
-    // required: true,
-    type: String,
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Category",
     required: true,
-    unique: true,
+    index: true,
   },
   name: {
     type: String,
     required: true,
-    unique: true,
+    unique: false,
   },
   slug: {
     type: String,
@@ -21,6 +19,14 @@ const YogaSchema = new mongoose.Schema({
   },
   mainImage: {
     type: String, // Cloudinary or other image URL
+    required: true,
+  },
+  infoSectionImage: {
+    type: String,
+    required: true,
+  },
+  benefitImage: {
+    type: String,
     required: true,
   },
   subHeading: {
@@ -50,10 +56,13 @@ const YogaSchema = new mongoose.Schema({
   videoLink: {
     type: String, // YouTube or other video URL
   },
-  benefits: {
-    type: [String], // Array of benefits
-    required: true,
-  },
+  benefits: [
+    {
+      BenefitName: { type: String, required: true },
+      title: { type: String, required: true },
+      description: { type: String, required: true },
+    },
+  ],
 });
 
 module.exports = mongoose.model("Yoga", YogaSchema);

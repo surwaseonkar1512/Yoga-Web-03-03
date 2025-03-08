@@ -5,7 +5,25 @@ const BASE_URL = "https://yoga-web-03-03.onrender.com/api";
 
 export const getYogaPractice = async () => {
   try {
-    const response = await axios.get(`${BASE_URL}/yogas`);
+    const response = await axios.get(`${BASE_URL}/yogas/`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    return { success: false, message: "Error fetching categories" };
+  }
+};
+export const getYogaPracticeBySlug = async (slug) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/yogas/${slug}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    return { success: false, message: "Error fetching categories" };
+  }
+};
+export const getYogaByCategory = async (id) => {
+  try {
+    const response = await axios.get(`${BASE_URL}/yogas/category/${id}`);
     return response.data;
   } catch (error) {
     console.error("Error fetching categories:", error);
