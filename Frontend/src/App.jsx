@@ -10,6 +10,8 @@ import Signup from "./pages/Signup";
 import VerifyEmail from "./pages/VerifyEmail";
 import ForgotPassword from "./pages/ForgotPassword";
 import AdminDasboard from "./pages/AdminDasboard";
+import AboutUs from "./pages/AboutUs";
+import Contact from "./pages/Contact";
 // import About from "./pages/About";
 // import Contact from "./pages/Contact";
 // import Meditation from "./pages/Meditation";
@@ -24,7 +26,7 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<HomePage />} />
-        
+
         <Route path="/admin-dashBoard" element={<AdminDasboard />} />
         {/* <Route path="/contact" element={<Contact />} />
         <Route path="/meditation" element={<Meditation />} />
@@ -39,6 +41,9 @@ const App = () => {
             </>
           }
         />
+        <Route path="/about-us" element={<AboutUs />} />
+        <Route path="/contact-us" element={<Contact />} />
+
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route
           path="verify-email"
