@@ -100,7 +100,7 @@ const YogaForm = () => {
         steps: JSON.stringify(data.steps),
         benefits: JSON.stringify(data.benefits),
         mainImage: imageFile,
-        infoSectionImage: infoImageFile,
+        infoImageFile: infoImageFile,
         benefitImage: benefitImageFile,
       });
 

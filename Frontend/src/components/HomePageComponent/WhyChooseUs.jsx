@@ -1,7 +1,5 @@
-import React from "react";
-import { CheckCircle, Clock, Headset, Heart, Star } from "lucide-react"; // Icons for features
+import { CheckCircle, Clock, Headset, Heart } from "lucide-react"; // Icons for features
 import { motion } from "framer-motion";
-import BlogSlider from "./BlogPost";
 
 const WhyChooseUs = () => {
   const features = [

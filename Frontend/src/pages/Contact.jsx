@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { apiConnector } from "../services/apiConnector";
 import { contactusEndpoint } from "../services/apis";
 

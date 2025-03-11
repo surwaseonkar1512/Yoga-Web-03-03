@@ -12,7 +12,8 @@ import ForgotPassword from "./pages/ForgotPassword";
 import AdminDasboard from "./pages/AdminDasboard";
 import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
-
+import YogaCategoryPage from "./pages/YogaCategoryPage";
+import YogaDetailsPage from "./pages/YogaDetailsPage";
 // import About from "./pages/About";
 // import Contact from "./pages/Contact";
 // import Meditation from "./pages/Meditation";
