@@ -14,6 +14,9 @@ import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
 import YogaCategoryPage from "./pages/YogaCategoryPage";
 import YogaDetailsPage from "./pages/YogaDetailsPage";
+import RecipePage from "./pages/RecipePage";
+import RecipeDetailPage from "./pages/RecipeDetailPage";
+import MeditationMusicSection from "./pages/MeditationMusicSection";
 // import About from "./pages/About";
 // import Contact from "./pages/Contact";
 // import Meditation from "./pages/Meditation";
@@ -31,11 +34,15 @@ const App = () => {
 
         <Route path="/admin-dashBoard" element={<AdminDasboard />} />
         {/* <Route path="/contact" element={<Contact />} />
-        <Route path="/meditation" element={<Meditation />} />
-        <Route path="/songs" element={<Songs />} />
-        <Route path="/nutrition" element={<Nutrition />} /> */}
+        <Route path="/meditation" element={<MeditationMusicSection />} />
+        <Route path="/songs" element={<Songs />} />*/}
+        <Route path="/meditation" element={<MeditationMusicSection />} />
+
+        <Route path="/nutrition" element={<RecipePage />} />
         <Route path="/yoga-exercises" element={<YogaCategoryPage />} />
         <Route path="/yogaDetailPage/:slug" element={<YogaDetailsPage />} />
+        <Route path="/recipeDetailPage/:slug" element={<RecipeDetailPage />} />
+
         <Route
           path="/login"
           element={

@@ -7,6 +7,8 @@ import NutritionMain from "../components/AdminDashBoard/NutritionComponent/Nutri
 import { GrYoga } from "react-icons/gr";
 import { MdOutlineFoodBank } from "react-icons/md";
 import YogaForm from "../components/AdminDashBoard/YogaCategoryComponent/YogaForm";
+import RecipeForm from "../components/AdminDashBoard/NutritionComponent/RacipeForm";
+import AddRecipeForm from "../components/AdminDashBoard/NutritionComponent/RacipeForm";
 
 const menuItems = [
   {
@@ -29,7 +31,7 @@ const menuItems = [
   },
   {
     id: "nutrition recipe",
-    Component: <YogaCategoryMain />,
+    Component: <RecipeForm />,
     name: "Recipe",
     icon: MdOutlineFoodBank,
   },
