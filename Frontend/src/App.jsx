@@ -12,6 +12,7 @@ import ForgotPassword from "./pages/ForgotPassword";
 import AdminDasboard from "./pages/AdminDasboard";
 import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
+
 // import About from "./pages/About";
 // import Contact from "./pages/Contact";
 // import Meditation from "./pages/Meditation";
@@ -31,8 +32,9 @@ const App = () => {
         {/* <Route path="/contact" element={<Contact />} />
         <Route path="/meditation" element={<Meditation />} />
         <Route path="/songs" element={<Songs />} />
-        <Route path="/nutrition" element={<Nutrition />} />
-        <Route path="/yoga-exercise" element={<YogaExercise />} /> */}
+        <Route path="/nutrition" element={<Nutrition />} /> */}
+        <Route path="/yoga-exercises" element={<YogaCategoryPage />} />
+        <Route path="/yogaDetailPage/:slug" element={<YogaDetailsPage />} />
         <Route
           path="/login"
           element={

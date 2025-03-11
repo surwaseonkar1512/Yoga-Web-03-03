@@ -118,8 +118,8 @@ const YogaCategoryMainComponent = () => {
           className="bg-green-800 text-white px-4 py-2 rounded-full text-lg"
           onClick={() => setShowForm(!showForm)}
         >
-          Create +
-        </button>
+          {showForm ? "Cancel" : "Create +"}
+          </button>
       </div>
 
       {error && <div className="text-red-500 mb-2">{error}</div>}
