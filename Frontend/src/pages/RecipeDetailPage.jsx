@@ -26,7 +26,8 @@ const RecipeDetailPage = () => {
     fetchRecipe();
   }, [slug]);
 
-  if (loading) return <p className="text-center text-lg">Loading...</p>;
+  if (loading)
+    return <p className="text-center h-screen text-lg">Loading...</p>;
   if (error) return <p className="text-center text-red-500">{error}</p>;
   if (!recipe)
     return <p className="text-center text-gray-500">No recipe found.</p>;
@@ -51,9 +52,7 @@ const RecipeDetailPage = () => {
         {/* Left Side - Image */}
         <div className="relative w-full md:w-1/2 flex justify-center">
           <img
-            src={
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr-HnTED-utemZAxYxIKpdX1h_Qx3_iASR8A&s"
-            }
+            src={recipe.infoImage}
             alt={recipe.title}
             className="w-full max-h-[400px] object-cover rounded-lg shadow-md"
           />
@@ -85,11 +84,14 @@ const RecipeDetailPage = () => {
               <strong>Calories:</strong> {recipe.calories}
             </p>
           </div>
+          <div className="w-fit px-4 py-2 my-5 md:text-xl text-lg text-center bg-red-500 text-white font-semibold rounded-full">
+            Author: {recipe.author}
+          </div>
         </div>
       </div>
 
       {/* Video Section */}
-      {recipe.videoLink && (
+      {recipe.youtubeVideo && (
         <div className="mt-8 w-full mx-auto px-6">
           <div className="w-full flex justify-center my-5">
             <div className="relative md:text-3xl text-xl px-4 py-2 text-center bg-green-800 text-white font-semibold rounded-full">
@@ -98,7 +100,7 @@ const RecipeDetailPage = () => {
           </div>
           <div className="mt-4 flex justify-center">
             <iframe
-              src={recipe.videoLink}
+              src={recipe.youtubeVideo}
               title="Recipe Video"
               frameBorder="0"
               allowFullScreen
@@ -109,14 +111,13 @@ const RecipeDetailPage = () => {
       )}
 
       {/* Ingredients */}
-      <div className="flex flex-col md:flex-row items-center justify-between bg-white p-8 md:p-16 rounded-lg">
-        {/* Left Side - Image */}
-
-        <div>
-          <h2 className="w-fit px-4 py-2 my-2 md:text-xl text-lg text-center bg-green-800 text-white font-semibold rounded-full">
+      <div className="flex flex-col md:flex-row items-center justify-center gap-12 bg-white p-6 md:p-20 rounded-xl">
+        {/* Left Side - Ingredients */}
+        <div className="w-full md:w-1/2">
+          <h2 className="w-fit px-6 py-3 my-4 text-lg md:text-5xl text-center bg-green-800 text-white font-bold rounded-full shadow-md">
             Ingredients
           </h2>
-          <ul className="list-disc list-inside text-gray-700">
+          <ul className="list-disc list-inside text-gray-800 text-base md:text-2xl leading-relaxed">
             {recipe.ingredients.map((ingredient, index) => (
               <li key={index}>
                 <strong>{ingredient.name}</strong>: {ingredient.quantity}
@@ -124,40 +125,43 @@ const RecipeDetailPage = () => {
             ))}
           </ul>
         </div>
+        {/* Right Side - Image */}
         <div className="relative w-full md:w-1/2 flex justify-center">
           <img
-            src={
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr-HnTED-utemZAxYxIKpdX1h_Qx3_iASR8A&s"
-            }
+            src={recipe.ingredientsImage}
             alt={recipe.title}
-            className="w-full max-h-[400px] object-cover rounded-lg shadow-md"
+            className="w-full max-h-[500px] object-cover rounded-xl shadow-lg"
           />
         </div>
       </div>
 
-      {/* Instructions */}
-      {/* Instructions */}
-      <div className="flex flex-col md:flex-row items-center justify-between bg-white p-8 md:p-16 rounded-lg">
+      {/* Instructions Section */}
+      <div className="flex flex-col md:flex-row items-center justify-center gap-12 bg-white p-6 md:p-20 rounded-xl shadow-lg mt-10">
+        {/* Left Side - Image */}
         <div className="relative w-full md:w-1/2 flex justify-center">
           <img
-            src={
-              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTr-HnTED-utemZAxYxIKpdX1h_Qx3_iASR8A&s"
-            }
+            src={recipe.instructionsImage}
             alt={recipe.title}
-            className="w-full max-h-[400px] object-cover rounded-lg shadow-md"
+            className="w-full max-h-[500px] object-cover rounded-xl shadow-lg"
           />
         </div>
-        <div>
-          <h2 className="w-fit px-4 py-2 my-2 md:text-xl text-lg text-center bg-green-800 text-white font-semibold rounded-full">
+        {/* Right Side - Instructions */}
+        <div className="w-full md:w-1/2">
+          <h2 className="w-fit px-6 py-3 my-4 text-lg md:text-5xl text-center bg-green-800 text-white font-bold rounded-full shadow-md">
             Instructions
           </h2>
-          <ul className="list-disc list-inside text-gray-700 space-y-2">
+          <ul className="list-disc list-inside text-gray-800 text-base md:text-2xl leading-relaxed space-y-4">
             {recipe.instructions
-              .join(", ") // Convert array into a single string
-              .split(",") // Split the string at each comma
+              .map((instruction) =>
+                instruction.replace(/[\[\]\\"]/g, "").trim()
+              ) // Clean each instruction
+              .filter((instruction) => instruction !== "") // Remove empty ones
               .map((instruction, index) => (
                 <li key={index} className="text-lg">
-                  {instruction.trim()}
+                  {" "}
+                  <span key={index} className="text-lg">
+                    {instruction.replace(/[\[\]\\"]/g, "").trim()}
+                  </span>
                 </li>
               ))}
           </ul>

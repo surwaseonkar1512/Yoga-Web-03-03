@@ -19,12 +19,13 @@ exports.createRecipe = async (req, res) => {
       instructions,
       tags,
       author,
-      carbohydrates,
-      protein,
-      fat,
+      youtubeVideo,
     } = req.body;
 
     const imageFile = req.files?.image;
+    const infoImageFile = req.files?.infoImage;
+    const ingredientsImageFile = req.files?.ingredientsImage;
+    const instructionsImageFile = req.files?.instructionsImage;
 
     // List of required fields
     const requiredFields = {
@@ -41,16 +42,13 @@ exports.createRecipe = async (req, res) => {
       ingredients,
       instructions,
       author,
-      image: imageFile, // Special case for file upload
-      // carbohydrates,
-      // protein,
-      // fat,
+      image: imageFile,
     };
 
     // Find missing fields
     const missingFields = Object.entries(requiredFields)
-      .filter(([_, value]) => !value) // Filter fields that are missing (empty/null/undefined)
-      .map(([key]) => key); // Extract field names
+      .filter(([_, value]) => !value)
+      .map(([key]) => key);
 
     if (missingFields.length > 0) {
       return res.status(400).json({
@@ -59,11 +57,27 @@ exports.createRecipe = async (req, res) => {
       });
     }
 
-    // Upload main recipe image
+    // Upload images to Cloudinary
     const recipeImageUrl = await uploadImageToCloudinary(
       imageFile,
       "recipe_category"
     );
+    const infoImageUrl = infoImageFile
+      ? await uploadImageToCloudinary(infoImageFile, "recipe_info")
+      : null;
+    const ingredientsImageUrl = ingredientsImageFile
+      ? await uploadImageToCloudinary(
+          ingredientsImageFile,
+          "recipe_ingredients"
+        )
+      : null;
+    const instructionsImageUrl = instructionsImageFile
+      ? await uploadImageToCloudinary(
+          instructionsImageFile,
+          "recipe_instructions"
+        )
+      : null;
+
     if (!recipeImageUrl) {
       return res
         .status(500)
@@ -85,13 +99,9 @@ exports.createRecipe = async (req, res) => {
     // Upload ingredient images (if provided)
     const resolvedIngredients = await Promise.all(
       ingredients.map(async (ingredient) => {
-        const ingredientImageUrl = ingredient.image
-          ? await uploadImageToCloudinary(ingredient.image, "ingredient_images")
-          : null;
         return {
           name: ingredient.name,
           quantity: ingredient.quantity,
-          image: ingredientImageUrl,
         };
       })
     );
@@ -111,6 +121,10 @@ exports.createRecipe = async (req, res) => {
       title,
       slug,
       image: recipeImageUrl,
+      infoImage: infoImageUrl,
+      ingredientsImage: ingredientsImageUrl,
+      instructionsImage: instructionsImageUrl,
+      youtubeVideo,
       description,
       prep_time,
       cook_time,
@@ -121,7 +135,6 @@ exports.createRecipe = async (req, res) => {
       type,
       ingredients: resolvedIngredients,
       instructions,
-    
       tags,
       author,
     });
@@ -191,7 +204,6 @@ exports.getRecipeBySlug = async (req, res) => {
     });
   }
 };
-
 
 // Update an existing recipe
 exports.updateRecipe = async (req, res) => {

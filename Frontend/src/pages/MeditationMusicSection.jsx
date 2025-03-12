@@ -18,6 +18,9 @@ const MeditationMusicSection = () => {
         }
         const result = await response.json();
         setSongs(result.data.results || []);
+        if (result.data.results.length > 0) {
+          setPlayingSong(result.data.results[3]);
+        }
       } catch (error) {
         setError(error.message);
       } finally {
@@ -37,89 +40,112 @@ const MeditationMusicSection = () => {
     setPlayingSong(song);
   };
 
-  if (loading) return <p className="text-center py-10">Loading...</p>;
+  if (loading) return <p className="h-screen text-center py-10">Loading...</p>;
   if (error)
     return <p className="text-center py-10 text-red-500">Error: {error}</p>;
 
   return (
-    <section className="relative md:py-16 py-7 bg-gradient-to-r from-purple-700 to-pink-500 text-black overflow-hidden">
-      <div className="relative container mx-auto px-6 z-10">
-        <div className="text-center mb-12">
-          <span className="px-4 py-2 bg-green-800 text-white font-semibold rounded-full">
-            MEDITATION MUSIC
-          </span>
-          <h2 className="text-4xl font-bold mt-4">
-            Relax & Unwind with Soothing Sounds
-          </h2>
+    <section className="relative py-7 md:py-16 text-black overflow-hidden mt-20 px-4 md:px-10">
+      <div className="text-center mb-8 md:mb-12">
+        <span className="px-4 py-2 bg-green-800 text-white font-semibold rounded-full">
+          MEDITATION MUSIC
+        </span>
+        <h2 className="text-3xl md:text-4xl font-bold mt-4">
+          Relax & Unwind with Soothing Sounds
+        </h2>
+      </div>
+      <div className="flex flex-col md:flex-row">
+        <div className="bg-gray-100 md:w-1/4 w-full h-64 md:h-[90vh] overflow-auto p-4 rounded-lg">
+          <h3 className="text-lg text-center font-bold mb-4">Playlist</h3>
+          <ul>
+            {songs.map((song, index) => (
+              <li
+                key={index}
+                className="flex items-center py-2 cursor-pointer hover:bg-gray-200 rounded-lg p-2"
+                onClick={() => setPlayingSong(song)}
+              >
+                <img
+                  src={song.image?.[0]?.url}
+                  alt={song.name}
+                  className="w-12 h-12 rounded-md mr-3"
+                />
+                <div>
+                  <p className="text-sm font-semibold">{song.name}</p>
+                  <p className="text-xs text-gray-500">{song.primaryArtists}</p>
+                </div>
+              </li>
+            ))}
+          </ul>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {songs.map((song, index) => (
-            <div
-              key={index}
-              className="relative w-full max-w-sm mx-auto rounded-lg overflow-hidden shadow-lg bg-white text-black"
-            >
-              <img
-                src={song.image?.[2]?.url}
-                alt={song.name}
-                className="w-full h-72 object-cover"
-              />
-              <div className="absolute top-4 left-4 bg-white text-black px-3 py-1 text-sm font-bold rounded-full">
-                {song.label || "Unknown Artist"}
+        <div className="md:w-3/4 w-full mt-6 md:mt-0 md:pl-6">
+          {playingSong && (
+            <div className="bg-white shadow-lg p-4 rounded-lg overflow-hidden">
+              <h3 className="text-lg font-bold mb-4 text-center md:text-left">
+                Now Playing
+              </h3>
+              <div className="flex flex-col md:flex-row gap-4">
+                <div className="md:w-1/2">
+                  <img
+                    src={playingSong.image?.[1]?.url}
+                    alt={playingSong.name}
+                    className="w-full h-64 md:h-[70vh] object-cover rounded-lg"
+                  />
+                </div>
+                <div className="md:w-1/2">
+                  <p className="text-xl font-bold">{playingSong.name}</p>
+                  <p className="text-gray-600">
+                    {playingSong.artists.primary[0]?.name}
+                  </p>
+                  <p className="text-gray-500">
+                    Album: {playingSong.album.name}
+                  </p>
+                  <p className="text-gray-500">Year: {playingSong.year}</p>
+                  <p className="text-gray-500">Label: {playingSong.label}</p>
+                  <p className="text-gray-500">
+                    Language: {playingSong.language}
+                  </p>
+                  <audio
+                    controls
+                    autoPlay
+                    className="w-full mt-2"
+                    onPlay={(event) => handlePlay(event, playingSong)}
+                  >
+                    <source
+                      src={playingSong.downloadUrl[0]?.url}
+                      type="audio/mpeg"
+                    />
+                  </audio>
+                  <div>
+                    <h3 className="text-lg font-bold mt-6">Related Songs</h3>
+                    <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
+                      {songs.map((song, index) => (
+                        <div
+                          key={index}
+                          className="flex items-center py-2 cursor-pointer hover:bg-gray-200 rounded-lg p-2"
+                          onClick={() => setPlayingSong(song)}
+                        >
+                          <img
+                            src={song.image?.[0]?.url}
+                            alt={song.name}
+                            className="w-10 h-10 rounded-md mr-2"
+                          />
+                          <div>
+                            <p className="text-sm font-semibold">{song.name}</p>
+                            <p className="text-xs text-gray-500">
+                              {song.primaryArtists}
+                            </p>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  </div>
+                </div>
               </div>
-              <div className="p-4">
-                <h3 className="text-xl font-semibold">{song.name}</h3>
-              </div>
-              {song.downloadUrl && (
-                <audio
-                  controls
-                  className="w-full px-4 pb-4"
-                  onPlay={(event) => handlePlay(event, song)}
-                >
-                  <source src={song.downloadUrl[0]?.url} type="audio/mpeg" />
-                  Your browser does not support the audio element.
-                </audio>
-              )}
             </div>
-          ))}
+          )}
         </div>
       </div>
-
-      {playingSong && (
-        <div className="fixed bottom-10 left-1/2 transform -translate-x-1/2 bg-white shadow-lg p-4 rounded-lg flex items-center space-x-4 z-50">
-          <img
-            src={playingSong.image?.[1]?.url}
-            alt={playingSong.name}
-            className="w-12 h-12 rounded-full"
-          />
-          <div>
-            <p className="text-black font-semibold">{playingSong.name}</p>
-            <p className="text-sm text-gray-600">
-              {playingSong.primaryArtists}
-            </p>
-          </div>
-          <audio
-            controls
-            autoPlay
-            onPlay={(event) => handlePlay(event, playingSong)}
-          >
-            <source src={playingSong.downloadUrl[0]?.url} type="audio/mpeg" />
-          </audio>
-          <button
-            onClick={() => {
-              if (currentAudio) {
-                currentAudio.pause();
-                currentAudio.currentTime = 0;
-              }
-              setPlayingSong(null);
-              setCurrentAudio(null);
-            }}
-            className="p-2 text-green-800 rounded-full"
-          >
-            ✖
-          </button>
-        </div>
-      )}
     </section>
   );
 };

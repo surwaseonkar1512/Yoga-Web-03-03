@@ -89,9 +89,13 @@ const RecipeForm = () => {
         }
       });
 
-      if (image) {
-        formData.append("image", image);
-      }
+      // Handle image uploads
+      if (image) formData.append("image", image);
+      if (data.infoImage[0]) formData.append("infoImage", data.infoImage[0]);
+      if (data.ingredientsImage[0])
+        formData.append("ingredientsImage", data.ingredientsImage[0]);
+      if (data.instructionsImage[0])
+        formData.append("instructionsImage", data.instructionsImage[0]);
 
       const response = await createRecipe(formData);
       if (response?.success) {
@@ -149,10 +153,44 @@ const RecipeForm = () => {
           </div>
 
           <div>
-            <label>Image</label>
+            <label>Banner Image</label>
             <input
               type="file"
               onChange={(e) => setImage(e.target.files[0])}
+              className="w-full p-2 border rounded"
+            />
+          </div>
+          <div>
+            <label>Info Image</label>
+            <input
+              type="file"
+              {...register("infoImage")}
+              className="w-full p-2 border rounded"
+            />
+          </div>
+
+          <div>
+            <label>Ingredients Image</label>
+            <input
+              type="file"
+              {...register("ingredientsImage")}
+              className="w-full p-2 border rounded"
+            />
+          </div>
+
+          <div>
+            <label>Instructions Image</label>
+            <input
+              type="file"
+              {...register("instructionsImage")}
+              className="w-full p-2 border rounded"
+            />
+          </div>
+          <div>
+            <label>YouTube Video URL</label>
+            <input
+              {...register("youtubeVideo")}
+              placeholder="Paste YouTube link here"
               className="w-full p-2 border rounded"
             />
           </div>
@@ -220,6 +258,7 @@ const RecipeForm = () => {
                   placeholder="Quantity"
                   className="p-2 border rounded-lg"
                 />
+
                 <button
                   type="button"
                   onClick={() => remove(index)}
@@ -231,8 +270,8 @@ const RecipeForm = () => {
             ))}
             <button
               type="button"
-              onClick={() => append({ name: "", quantity: "" })}
-              className="bg-green-500 text-white px-3 py-1 rounded-lg"
+              onClick={() => append({ name: "", quantity: "", image: "" })}
+              className="bg-green-800 text-white px-3 py-1 rounded-lg my-6"
             >
               Add Ingredient
             </button>

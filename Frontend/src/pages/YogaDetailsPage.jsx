@@ -27,7 +27,7 @@ const YogaDetailsPage = () => {
   }, [slug]);
 
   if (loading)
-    return <div className="text-center mt-10 text-lg">Loading...</div>;
+    return <div className="h-screen text-center mt-10 text-lg">Loading...</div>;
   if (error)
     return <div className="text-center text-red-500 mt-10">{error}</div>;
 

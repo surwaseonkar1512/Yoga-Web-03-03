@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./components/AssetComponent/Navbar";
 import Footer from "./components/AssetComponent/Footer";
@@ -25,6 +25,13 @@ import MeditationMusicSection from "./pages/MeditationMusicSection";
 // import YogaExercise from "./pages/YogaExercise";
 
 const App = () => {
+  const location = useLocation();
+
+  // Scroll to the top whenever the route changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
     <div className="mx-auto w-full">
       <Navbar />

@@ -64,7 +64,7 @@ const Contact = () => {
         <div className="relative w-full md:w-1/2 flex justify-start z-10">
           <div className="relative w-[80%] md:w-[90%]">
             <img
-              src="https://wallpapers.com/images/hd/woman-performing-yoga-pose-gq6oj4pjlki8erru.jpg"
+              src="https://gayu.wpengine.com/wp-content/uploads/2024/12/home1-banner-image-i1.png"
               alt="Contact Us"
               className="w-full md:h-[800px] h-[300px] rounded-md object-contain drop-shadow-lg"
             />
@@ -150,26 +150,26 @@ const Contact = () => {
               <p className="text-red-500 font-medium text-sm mt-2">{error}</p>
             )}
           </form>
-
-          <div className="mt-10 bg-white/20 p-6 rounded-xl text-center">
-            <h3 className="text-xl font-bold">Our Office</h3>
-            <p className="text-white/80">
-              1810 Kings Way Marine Drive, 3rd Floor, Mumbai
-            </p>
-            <p className="text-white/80">Phone: 1800-2355-2356</p>
-            <p className="text-white/80">Email: contact@Yogahar yoga.co</p>
-          </div>
         </div>
       </section>
-
-      <div className="w-full h-full rounded-lg overflow-hidden shadow-lg">
-        <iframe
-          title="Google Map"
-          className="w-full h-[500px]"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241317.11609841668!2d72.74109806966308!3d19.08219783948382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b8a65c5a5b73%3A0x2a1947dd5fcb634d!2sMumbai%2C%20Maharashtra%2C%20India!5e0!3m2!1sen!2sus!4v1633928038412!5m2!1sen!2sus"
-          allowFullScreen="true"
-          loading="lazy"
-        ></iframe>
+      <div className="w-full grid grid-cols-1 md:grid-cols-2 items-center justify-between bg-black">
+        <div className="h-full flex flex-col items-center justify-center p-6  rounded-xl text-center px-10">
+          <h3 className="text-3xl font-bold text-white">Our Office</h3>
+          <p className="text-white/80">
+            1810 Kings Way Marine Drive, 3rd Floor, Mumbai
+          </p>
+          <p className="text-white/80">Phone: 1800-2355-2356</p>
+          <p className="text-white/80">Email: contact@Yogahar yoga.co</p>
+        </div>
+        <div className="w-full h-full rounded-lg overflow-hidden shadow-lg px-4">
+          <iframe
+            title="Google Map"
+            className="w-full h-[300px]"
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d241317.11609841668!2d72.74109806966308!3d19.08219783948382!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7b8a65c5a5b73%3A0x2a1947dd5fcb634d!2sMumbai%2C%20Maharashtra%2C%20India!5e0!3m2!1sen!2sus!4v1633928038412!5m2!1sen!2sus"
+            allowFullScreen="true"
+            loading="lazy"
+          ></iframe>
+        </div>
       </div>
     </div>
   );

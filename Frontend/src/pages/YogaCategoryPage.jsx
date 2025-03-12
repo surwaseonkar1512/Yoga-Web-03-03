@@ -65,7 +65,8 @@ const YogaCategoryPage = () => {
     fetchYogaByCategory();
   }, [selectedCategory]);
 
-  if (loading) return <div className="text-center mt-10">Loading...</div>;
+  if (loading)
+    return <div className="h-screen text-center mt-10">Loading...</div>;
   if (error)
     return <div className="text-center text-red-500 mt-10">{error}</div>;
 
