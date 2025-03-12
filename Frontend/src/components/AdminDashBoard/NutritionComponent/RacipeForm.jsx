@@ -303,7 +303,7 @@ const RecipeForm = () => {
           <button
             type="submit"
             disabled={isSubmitting}
-            className="w-full bg-blue-600 text-white p-3 rounded hover:bg-blue-700 disabled:bg-gray-400"
+            className="w-full bg-green-600 text-white p-3 rounded hover:bg-green-700 disabled:bg-gray-400"
           >
             {isSubmitting ? "Submitting..." : "Submit Recipe"}
           </button>

@@ -80,7 +80,7 @@ const BlogSlider = () => {
                 <p className="text-gray-600 text-sm mb-4">{post.description}</p>
                 <a
                   href={post.link}
-                  className="text-blue-600 font-semibold hover:underline"
+                  className="text-green-600 font-semibold hover:underline"
                 >
                   Read More →
                 </a>

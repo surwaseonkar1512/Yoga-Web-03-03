@@ -66,13 +66,13 @@ const RecipePage = () => {
         <input
           type="text"
           placeholder="Search recipes..."
-          className="p-3 border border-gray-300 rounded-lg w-full md:w-1/3 shadow-sm focus:ring-2 focus:ring-blue-500"
+          className="p-3 border border-gray-300 rounded-lg w-full md:w-1/3 shadow-sm focus:ring-2 focus:ring-green-500"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
 
         <select
-          className="p-3 border border-gray-300 rounded-lg w-full md:w-1/4 shadow-sm focus:ring-2 focus:ring-blue-500"
+          className="p-3 border border-gray-300 rounded-lg w-full md:w-1/4 shadow-sm focus:ring-2 focus:ring-green-500"
           value={selectedTag}
           onChange={(e) => setSelectedTag(e.target.value)}
         >
@@ -85,7 +85,7 @@ const RecipePage = () => {
         </select>
 
         <select
-          className="p-3 border border-gray-300 rounded-lg w-full md:w-1/4 shadow-sm focus:ring-2 focus:ring-blue-500"
+          className="p-3 border border-gray-300 rounded-lg w-full md:w-1/4 shadow-sm focus:ring-2 focus:ring-green-500"
           value={timeFilter}
           onChange={(e) => setTimeFilter(e.target.value)}
         >
@@ -110,7 +110,7 @@ const RecipePage = () => {
                 alt={recipe.title}
                 className="w-full h-56 object-cover rounded-lg"
               />
-              <div className="absolute top-2 left-2 bg-blue-600 text-white px-3 py-1 text-sm rounded-lg shadow">
+              <div className="absolute top-2 left-2 bg-green-600 text-white px-3 py-1 text-sm rounded-lg shadow">
                 {recipe.cook_time} min
               </div>
             </div>
@@ -127,7 +127,7 @@ const RecipePage = () => {
               {/* Button Section */}
               <Link
                 to={`/recipeDetailPage/${recipe.slug}`}
-                className="mt-auto my-4 block text-center bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 rounded-lg transition-all"
+                className="mt-auto my-4 block text-center bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition-all"
               >
                 View Recipe
               </Link>
