@@ -30,7 +30,7 @@ export default function ProfilePage() {
   const fetchUserData = async () => {
     try {
       const { data } = await axios.post(
-        `http://localhost:5000/api/profile/get-user-details`,
+        `https://yoga-web-03-03.onrender.com/api/profile/get-user-details`,
         {
           userId: user?._id,
         }
@@ -71,7 +71,7 @@ export default function ProfilePage() {
 
     try {
       const { data } = await axios.post(
-        "http://localhost:5000/api/profile/add-general",
+        "https://yoga-web-03-03.onrender.com/api/profile/add-general",
         {
           userId: user._id,
           title: general.title,
@@ -98,7 +98,7 @@ export default function ProfilePage() {
 
     try {
       const { data } = await axios.put(
-        `http://localhost:5000/api/profile/update-profile`,
+        `https://yoga-web-03-03.onrender.com/api/profile/update-profile`,
         {
           userId: user._id,
           ...profile,
@@ -133,7 +133,7 @@ export default function ProfilePage() {
       formData.append("userId", user._id);
 
       const { data } = await axios.put(
-        "http://localhost:5000/api/profile/update-display-picture",
+        "https://yoga-web-03-03.onrender.com/api/profile/update-display-picture",
         formData,
         {
           headers: {
