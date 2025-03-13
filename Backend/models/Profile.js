@@ -1,6 +1,5 @@
 const mongoose = require("mongoose");
 
-// Define the Profile schema
 const profileSchema = new mongoose.Schema({
   gender: {
     type: String,
@@ -16,7 +15,31 @@ const profileSchema = new mongoose.Schema({
     type: Number,
     trim: true,
   },
+  weight: {
+    type: Number, // Weight in kg
+  },
+  height: {
+    type: Number, // Height in cm
+  },
+  savedYogaPoses: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Yoga", // Reference to Yoga Pose collection
+    },
+  ],
+  savedRecipes: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "Recipe", // Reference to Recipe collection
+    },
+  ],
+  generals: [
+    {
+      title: { type: String, trim: true },
+      content: { type: String, trim: true },
+      date: { type: Date, default: Date.now },
+    },
+  ],
 });
 
-// Export the Profile model
 module.exports = mongoose.model("Profile", profileSchema);

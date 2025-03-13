@@ -15,6 +15,10 @@ export default function ProfilePage() {
     contactNumber: "",
   });
 
+  const [yogaSessions, setYogaSessions] = useState([]);
+  const [recipes, setRecipes] = useState([]);
+  const [general, setGeneral] = useState({ title: "", content: "" });
+
   const [loading, setLoading] = useState(false);
   const [uploading, setUploading] = useState(false);
   const [message, setMessage] = useState(null);
@@ -28,11 +32,11 @@ export default function ProfilePage() {
       const { data } = await axios.post(
         `http://localhost:5000/api/profile/get-user-details`,
         {
-          userId: user?._id, // Ensure the userId is passed correctly
+          userId: user?._id,
         }
       );
 
-      dispatch(setUser(data.data)); // Update Redux state
+      dispatch(setUser(data.data));
 
       if (data.data.additionalDetails) {
         setProfile({
@@ -40,13 +44,49 @@ export default function ProfilePage() {
           dateOfBirth: data.data.additionalDetails.dateOfBirth || "",
           about: data.data.additionalDetails.about || "",
           contactNumber: data.data.additionalDetails.contactNumber || "",
+          general: data.data.additionalDetails.generals || "",
+          savedYoga: data.data.additionalDetails.savedYogaPoses || "",
+          savedRecipe: data.data.additionalDetails.savedRecipes || "",
         });
+        setYogaSessions(data.data.additionalDetails.savedYogaPoses);
+        setRecipes(data.data.additionalDetails.savedRecipes);
+        setGeneral(data.data.additionalDetails.generals);
       }
     } catch (error) {
       console.error("Error fetching user details:", error);
     }
   };
 
+  const handleGeneralChange = (e) => {
+    setGeneral({ ...general, [e.target.name]: e.target.value });
+  };
+
+  const handleGeneralSubmit = async (e) => {
+    e.preventDefault();
+
+    if (!general.title || !general.content) {
+      setMessage("User ID, title, and content are required.");
+      return;
+    }
+
+    try {
+      const { data } = await axios.post(
+        "http://localhost:5000/api/profile/add-general",
+        {
+          userId: user._id,
+          title: general.title,
+          content: general.content,
+        }
+      );
+
+      setMessage("General content added successfully!");
+      setGeneral({ title: "", content: "" });
+    } catch (error) {
+      setMessage(
+        error.response?.data?.message || "Error adding general content."
+      );
+    }
+  };
   const handleChange = (e) => {
     setProfile({ ...profile, [e.target.name]: e.target.value });
   };
@@ -113,103 +153,186 @@ export default function ProfilePage() {
 
     setUploading(false);
   };
-
   return (
-    <div className="max-w-3xl mx-auto p-6 bg-white shadow-lg rounded-xl border border-gray-200 mt-16">
-      <div className="flex flex-col items-center">
-        <div className="relative">
-          <img
-            src={user?.image || "/default-avatar.png"}
-            alt="Profile"
-            className="w-24 h-24 md:w-32 md:h-32 rounded-full border shadow-md"
-          />
-          <label className="absolute bottom-0 right-0 bg-gray-700 text-white p-2 rounded-full cursor-pointer">
-            <AiOutlineCamera className="text-lg" />
-            <input
-              type="file"
-              className="hidden"
-              onChange={handleImageUpload}
+    <div className="w-full flex flex-col items-center justify-center mx-auto p-6 bg-white shadow-lg rounded-xl border border-gray-200 mt-16">
+      <div className="flex md:flex-row flex-col gap-3 items-start">
+        <div className="flex flex-col items-center">
+          <div className="relative">
+            <img
+              src={user?.image || "/default-avatar.png"}
+              alt="Profile"
+              className="w-[300px] h-[300px] object-cover rounded-full border shadow-md"
             />
-          </label>
+            <label className="absolute bottom-0 right-0 bg-gray-700 text-white p-2 rounded-full cursor-pointer">
+              <AiOutlineCamera className="text-lg" />
+              <input
+                type="file"
+                className="hidden"
+                onChange={handleImageUpload}
+              />
+            </label>
+          </div>
+          <h2 className="text-2xl font-semibold mt-4">
+            {user?.firstName} {user?.lastName}
+          </h2>
+          <p className="text-gray-500">{user?.email}</p>
         </div>
-        <h2 className="text-2xl font-semibold mt-4">
-          {user?.firstName} {user?.lastName}
-        </h2>
-        <p className="text-gray-500">{user?.email}</p>
+
+        {message && (
+          <p className="text-center text-sm font-semibold text-green-600 bg-green-100 p-2 rounded-lg mt-4">
+            {message}
+          </p>
+        )}
+        <form onSubmit={handleSubmit} className="space-y-4 mt-6">
+          <input
+            name="firstName"
+            value={user?.firstName || ""}
+            placeholder="First Name"
+            className="border p-3 rounded-lg shadow-sm w-full bg-gray-100 cursor-not-allowed"
+            disabled
+          />
+          <input
+            name="lastName"
+            value={user?.lastName || ""}
+            placeholder="Last Name"
+            className="border p-3 rounded-lg shadow-sm w-full bg-gray-100 cursor-not-allowed"
+            disabled
+          />
+          <input
+            name="email"
+            value={user?.email || ""}
+            placeholder="Email"
+            className="border p-3 rounded-lg shadow-sm w-full bg-gray-100 cursor-not-allowed"
+            disabled
+          />
+
+          <div className="grid grid-cols-2 gap-4">
+            <input
+              name="gender"
+              value={profile.gender}
+              onChange={handleChange}
+              placeholder="Gender"
+              className="border p-3 rounded-lg shadow-sm w-full"
+            />
+            <input
+              type="date"
+              name="dateOfBirth"
+              value={profile.dateOfBirth}
+              onChange={handleChange}
+              className="border p-3 rounded-lg shadow-sm w-full"
+            />
+          </div>
+
+          <textarea
+            name="about"
+            value={profile.about}
+            onChange={handleChange}
+            placeholder="About"
+            className="border p-3 rounded-lg shadow-sm w-full"
+          />
+
+          <input
+            name="contactNumber"
+            value={profile.contactNumber}
+            onChange={handleChange}
+            placeholder="Contact Number"
+            className="border p-3 rounded-lg shadow-sm w-full"
+          />
+
+          <button
+            type="submit"
+            disabled={loading}
+            className={`${
+              loading ? "bg-gray-400" : "bg-green-600 hover:bg-green-700"
+            } text-white px-6 py-3 rounded-lg shadow-lg transition-all w-full`}
+          >
+            {loading ? "Updating..." : "Update Profile"}
+          </button>
+        </form>
       </div>
 
-      {message && (
-        <p className="text-center text-sm font-semibold text-green-600 bg-green-100 p-2 rounded-lg mt-4">
-          {message}
-        </p>
-      )}
+      {/* Saved Yoga Sessions */}
+      <div className="w-full bg-gray-200 mt-6">
+        <h3 className="text-xl font-semibold">Saved Yoga Sessions</h3>
+        {yogaSessions.length > 0 ? (
+          <ul className="list-disc pl-5">
+            {yogaSessions.map((session) => (
+              <li key={session._id} className="mt-2">
+                {session.title}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-500">No saved yoga sessions.</p>
+        )}
+      </div>
 
-      <form onSubmit={handleSubmit} className="space-y-4 mt-6">
-        <input
-          name="firstName"
-          value={user?.firstName || ""}
-          placeholder="First Name"
-          className="border p-3 rounded-lg shadow-sm w-full bg-gray-100 cursor-not-allowed"
-          disabled
-        />
-        <input
-          name="lastName"
-          value={user?.lastName || ""}
-          placeholder="Last Name"
-          className="border p-3 rounded-lg shadow-sm w-full bg-gray-100 cursor-not-allowed"
-          disabled
-        />
-        <input
-          name="email"
-          value={user?.email || ""}
-          placeholder="Email"
-          className="border p-3 rounded-lg shadow-sm w-full bg-gray-100 cursor-not-allowed"
-          disabled
-        />
+      {/* Saved Recipes */}
+      <div className="mt-6">
+        <h3 className="text-xl font-semibold">Saved Recipes</h3>
+        {recipes.length > 0 ? (
+          <ul className="list-disc pl-5">
+            {recipes.map((recipe) => (
+              <li key={recipe._id} className="mt-2">
+                {recipe.title}
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-500">No saved recipes.</p>
+        )}
+      </div>
 
-        <div className="grid grid-cols-2 gap-4">
+      {/* Add General Content */}
+      <div className="mt-6">
+        <h3 className="text-xl font-semibold">General Content</h3>
+        {general?.length > 0 ? (
+          <ul className="mt-4 space-y-3">
+            {general.map((general) => (
+              <li
+                key={general._id}
+                className="p-4 bg-gray-100 rounded-lg shadow-md"
+              >
+                <h4 className="text-lg font-semibold">{general.title}</h4>
+                <p className="text-gray-700">{general.content}</p>
+                <p className="text-gray-500 text-sm">
+                  {new Date(general.date).toLocaleDateString()}
+                </p>
+              </li>
+            ))}
+          </ul>
+        ) : (
+          <p className="text-gray-500 mt-2">No general content available.</p>
+        )}
+      </div>
+      <div className="mt-6">
+        <h3 className="text-xl font-semibold">Add General Content</h3>
+        <form onSubmit={handleGeneralSubmit} className="space-y-4 mt-3">
           <input
-            name="gender"
-            value={profile.gender}
-            onChange={handleChange}
-            placeholder="Gender"
+            type="text"
+            name="title"
+            value={general.title}
+            onChange={handleGeneralChange}
+            placeholder="Title"
             className="border p-3 rounded-lg shadow-sm w-full"
+            required
           />
-          <input
-            type="date"
-            name="dateOfBirth"
-            value={profile.dateOfBirth}
-            onChange={handleChange}
+          <textarea
+            name="content"
+            value={general.content}
+            onChange={handleGeneralChange}
+            placeholder="Content"
             className="border p-3 rounded-lg shadow-sm w-full"
-          />
-        </div>
-
-        <textarea
-          name="about"
-          value={profile.about}
-          onChange={handleChange}
-          placeholder="About"
-          className="border p-3 rounded-lg shadow-sm w-full"
-        />
-
-        <input
-          name="contactNumber"
-          value={profile.contactNumber}
-          onChange={handleChange}
-          placeholder="Contact Number"
-          className="border p-3 rounded-lg shadow-sm w-full"
-        />
-
-        <button
-          type="submit"
-          disabled={loading}
-          className={`${
-            loading ? "bg-gray-400" : "bg-blue-600 hover:bg-blue-700"
-          } text-white px-6 py-3 rounded-lg shadow-lg transition-all w-full`}
-        >
-          {loading ? "Updating..." : "Update Profile"}
-        </button>
-      </form>
+            required
+          ></textarea>
+          <button
+            type="submit"
+            className="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-lg transition-all w-full"
+          >
+            Add Content
+          </button>
+        </form>
+      </div>
     </div>
   );
 }

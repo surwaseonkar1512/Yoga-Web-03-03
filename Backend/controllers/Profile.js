@@ -178,3 +178,238 @@ exports.updateDisplayPicture = async (req, res) => {
     res.status(500).json({ success: false, message: "Internal server error" });
   }
 };
+
+// Save a Yoga Pose
+exports.saveYogaPose = async (req, res) => {
+  try {
+    const { userId, yogaPoseId } = req.body;
+
+    if (!userId || !yogaPoseId) {
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "User ID and Yoga Pose ID are required",
+        });
+    }
+
+    const user = await User.findById(userId).populate("additionalDetails");
+    if (!user || !user.additionalDetails) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User profile not found" });
+    }
+
+    const profile = user.additionalDetails;
+    if (!profile.savedYogaPoses.includes(yogaPoseId)) {
+      profile.savedYogaPoses.push(yogaPoseId);
+      await profile.save();
+    }
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Yoga pose saved successfully",
+        data: profile,
+      });
+  } catch (error) {
+    console.error("Save Yoga Pose Error:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+// Remove a Yoga Pose
+exports.removeYogaPose = async (req, res) => {
+  try {
+    const { userId, yogaPoseId } = req.body;
+
+    if (!userId || !yogaPoseId) {
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "User ID and Yoga Pose ID are required",
+        });
+    }
+
+    const user = await User.findById(userId).populate("additionalDetails");
+    if (!user || !user.additionalDetails) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User profile not found" });
+    }
+
+    const profile = user.additionalDetails;
+    profile.savedYogaPoses = profile.savedYogaPoses.filter(
+      (id) => id.toString() !== yogaPoseId
+    );
+    await profile.save();
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Yoga pose removed successfully",
+        data: profile,
+      });
+  } catch (error) {
+    console.error("Remove Yoga Pose Error:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+// Save a Recipe
+exports.saveRecipe = async (req, res) => {
+  try {
+    const { userId, recipeId } = req.body;
+
+    if (!userId || !recipeId) {
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "User ID and Recipe ID are required",
+        });
+    }
+
+    const user = await User.findById(userId).populate("additionalDetails");
+    if (!user || !user.additionalDetails) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User profile not found" });
+    }
+
+    const profile = user.additionalDetails;
+    if (!profile.savedRecipes.includes(recipeId)) {
+      profile.savedRecipes.push(recipeId);
+      await profile.save();
+    }
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Recipe saved successfully",
+        data: profile,
+      });
+  } catch (error) {
+    console.error("Save Recipe Error:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+// Remove a Recipe
+exports.removeRecipe = async (req, res) => {
+  try {
+    const { userId, recipeId } = req.body;
+
+    if (!userId || !recipeId) {
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "User ID and Recipe ID are required",
+        });
+    }
+
+    const user = await User.findById(userId).populate("additionalDetails");
+    if (!user || !user.additionalDetails) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User profile not found" });
+    }
+
+    const profile = user.additionalDetails;
+    profile.savedRecipes = profile.savedRecipes.filter(
+      (id) => id.toString() !== recipeId
+    );
+    await profile.save();
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "Recipe removed successfully",
+        data: profile,
+      });
+  } catch (error) {
+    console.error("Remove Recipe Error:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+// Add a General Entry
+exports.addGeneralEntry = async (req, res) => {
+  try {
+    const { userId, title, content } = req.body;
+
+    if (!userId || !title || !content) {
+      return res
+        .status(400)
+        .json({
+          success: false,
+          message: "User ID, title, and content are required",
+        });
+    }
+
+    const user = await User.findById(userId).populate("additionalDetails");
+    if (!user || !user.additionalDetails) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User profile not found" });
+    }
+
+    const profile = user.additionalDetails;
+    profile.generals.push({ title, content, date: new Date() });
+    await profile.save();
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "General entry added successfully",
+        data: profile,
+      });
+  } catch (error) {
+    console.error("Add General Entry Error:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
+
+// Remove a General Entry
+exports.removeGeneralEntry = async (req, res) => {
+  try {
+    const { userId, entryId } = req.body;
+
+    if (!userId || !entryId) {
+      return res
+        .status(400)
+        .json({ success: false, message: "User ID and Entry ID are required" });
+    }
+
+    const user = await User.findById(userId).populate("additionalDetails");
+    if (!user || !user.additionalDetails) {
+      return res
+        .status(404)
+        .json({ success: false, message: "User profile not found" });
+    }
+
+    const profile = user.additionalDetails;
+    profile.generals = profile.generals.filter(
+      (entry) => entry._id.toString() !== entryId
+    );
+    await profile.save();
+
+    res
+      .status(200)
+      .json({
+        success: true,
+        message: "General entry removed successfully",
+        data: profile,
+      });
+  } catch (error) {
+    console.error("Remove General Entry Error:", error);
+    res.status(500).json({ success: false, message: "Internal server error" });
+  }
+};
