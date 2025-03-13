@@ -44,8 +44,7 @@ const AdminDashboard = () => {
   const [loading, setLoading] = useState(true);
   const { token } = useSelector((state) => state.auth);
   const { accountType } = useSelector((state) => state.auth);
-  console.log("token", token);
-  console.log("accountType", accountType);
+
   useEffect(() => {
     if (user === undefined) return; // Wait until user data is loaded
 
