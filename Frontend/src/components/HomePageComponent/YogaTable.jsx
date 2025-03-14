@@ -66,7 +66,7 @@ const YogaScheduleTable = () => {
           transition={{ duration: 0.8, ease: "easeOut" }}
         >
           <thead>
-            <tr className="bg-gradient-to-r from-pink-500 via-purple-500 to-blue-500 text-white">
+            <tr className="bg-gradient-to-r from-pink-500 via-purple-500 to-green-500 text-white">
               {schedule.map((day, index) => (
                 <th
                   key={index}

@@ -8,7 +8,7 @@ const WhyChooseUs = () => {
       text: "Certified Yoga Instructors",
     },
     {
-      icon: <Clock size={24} className="text-blue-500" />,
+      icon: <Clock size={24} className="text-green-500" />,
       text: "Flexible Schedules",
     },
     {

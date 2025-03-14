@@ -96,7 +96,7 @@ const Footer = () => {
 
         {/* Copyright */}
         <div className="text-center text-gray-400 mt-8">
-          © 2025 GoodLayers. All Rights Reserved.
+          © 2025 Yogahar. All Rights Reserved.
         </div>
       </div>
     </footer>

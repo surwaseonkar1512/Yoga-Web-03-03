@@ -90,12 +90,12 @@ const NutritionRecipesSection = () => {
                       </div>
 
                       {/* Button - Positioned Properly */}
-                      <Link
+                      {/* <Link
                         to={`/yogaCategroy/${service?.slug}`}
                         className="absolute bottom-32 right-4 bg-green-800 p-3 rounded-full shadow-lg transition-all duration-300 hover:bg-green-600 hover:scale-110"
                       >
                         <FaArrowRight className="text-white text-lg -rotate-45" />
-                      </Link>
+                      </Link> */}
                     </div>
                   </SwiperSlide>
                 ))}

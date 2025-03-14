@@ -1,5 +1,5 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./components/AssetComponent/Navbar";
 import Footer from "./components/AssetComponent/Footer";
@@ -14,6 +14,10 @@ import AboutUs from "./pages/AboutUs";
 import Contact from "./pages/Contact";
 import YogaCategoryPage from "./pages/YogaCategoryPage";
 import YogaDetailsPage from "./pages/YogaDetailsPage";
+import RecipePage from "./pages/RecipePage";
+import RecipeDetailPage from "./pages/RecipeDetailPage";
+import MeditationMusicSection from "./pages/MeditationMusicSection";
+import Profile from "./pages/Profile";
 // import About from "./pages/About";
 // import Contact from "./pages/Contact";
 // import Meditation from "./pages/Meditation";
@@ -22,20 +26,30 @@ import YogaDetailsPage from "./pages/YogaDetailsPage";
 // import YogaExercise from "./pages/YogaExercise";
 
 const App = () => {
+  const location = useLocation();
+
+  // Scroll to the top whenever the route changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
+
   return (
     <div className="mx-auto w-full">
       <Navbar />
 
       <Routes>
         <Route path="/" element={<HomePage />} />
-
+        Profile
+        <Route path="/profile" element={<Profile />} />
         <Route path="/admin-dashBoard" element={<AdminDasboard />} />
         {/* <Route path="/contact" element={<Contact />} />
-        <Route path="/meditation" element={<Meditation />} />
-        <Route path="/songs" element={<Songs />} />
-        <Route path="/nutrition" element={<Nutrition />} /> */}
+        <Route path="/meditation" element={<MeditationMusicSection />} />
+        <Route path="/songs" element={<Songs />} />*/}
+        <Route path="/meditation" element={<MeditationMusicSection />} />
+        <Route path="/nutrition" element={<RecipePage />} />
         <Route path="/yoga-exercises" element={<YogaCategoryPage />} />
         <Route path="/yogaDetailPage/:slug" element={<YogaDetailsPage />} />
+        <Route path="/recipeDetailPage/:slug" element={<RecipeDetailPage />} />
         <Route
           path="/login"
           element={
@@ -46,7 +60,6 @@ const App = () => {
         />
         <Route path="/about-us" element={<AboutUs />} />
         <Route path="/contact-us" element={<Contact />} />
-
         <Route path="/forgot-password" element={<ForgotPassword />} />
         <Route
           path="verify-email"

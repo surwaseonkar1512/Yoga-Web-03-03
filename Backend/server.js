@@ -5,9 +5,10 @@ const cors = require("cors");
 const categoryRoutes = require("./routes/categoryRoutes");
 const NutritionRoutes = require("./routes/NutritionRoutes");
 const yogaRoutes = require("./routes/yogaRoutes");
-
+const recipeRoutes = require("./routes/recipeRoutes");
 const userRoutes = require("./routes/user");
 const contactUsRoute = require("./routes/Contact");
+const profileRoutes = require("./routes/profile");
 const fileUpload = require("express-fileupload");
 const { cloudinaryConnect } = require("./config/cloudinary");
 
@@ -41,8 +42,9 @@ app.use("/api/auth", userRoutes);
 app.use("/api/categories", categoryRoutes);
 app.use("/api/nutrition", NutritionRoutes);
 app.use("/api/reach", contactUsRoute);
-
 app.use("/api/yogas", yogaRoutes);
+app.use("/api/recipes", recipeRoutes);
+app.use("/api/profile", profileRoutes);
 
 mongoose
   .connect(process.env.MONGO_URI, {
