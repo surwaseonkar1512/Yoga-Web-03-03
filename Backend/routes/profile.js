@@ -11,7 +11,7 @@ const {
   removeRecipe,
   addGeneralEntry,
   removeGeneralEntry,
-} = require("../controllers/profile");
+} = require("../controllers/Profile");
 
 // Update user profile
 router.put("/update-profile", updateProfile);

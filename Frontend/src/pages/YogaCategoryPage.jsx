@@ -5,6 +5,8 @@ import {
   getYogaPractice,
 } from "../services/operations/YogaPractices";
 import { Link } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { saveYoga } from "../services/operations/Profile";
 
 const YogaCategoryPage = () => {
   const [categories, setCategories] = useState([]);
@@ -14,6 +16,7 @@ const YogaCategoryPage = () => {
   );
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const { user } = useSelector((state) => state.profile);
 
   // Fetch categories on mount
   useEffect(() => {
@@ -64,6 +67,20 @@ const YogaCategoryPage = () => {
 
     fetchYogaByCategory();
   }, [selectedCategory]);
+  const handleSaveYoga = async (yogaId) => {
+    if (!user || !user._id) {
+      setError("User not found. Please log in.");
+      return;
+    }
+
+    const response = await saveYoga({ userId: user._id, yogaPoseId: yogaId });
+
+    if (response.success) {
+      console.log("Yoga pose saved successfully!");
+    } else {
+      setError(response.message || "Failed to save yoga pose.");
+    }
+  };
 
   if (loading)
     return <div className="h-screen text-center mt-10">Loading...</div>;
@@ -122,6 +139,15 @@ const YogaCategoryPage = () => {
                   />
                   <div className="absolute top-2 left-2 bg-green-800 text-white px-3 py-1 text-sm rounded-lg shadow">
                     {pose.totalTimeToPractice} min
+                  </div>
+
+                  <div
+                    onClick={() => {
+                      handleSaveYoga(pose._id);
+                    }}
+                    className="absolute top-2 right-2 bg-green-800 text-white px-3 py-1 text-sm rounded-lg shadow"
+                  >
+                    save
                   </div>
                 </div>
 

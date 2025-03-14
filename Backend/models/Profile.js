@@ -23,13 +23,13 @@ const profileSchema = new mongoose.Schema({
   },
   savedYogaPoses: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Object,
       ref: "Yoga", // Reference to Yoga Pose collection
     },
   ],
   savedRecipes: [
     {
-      type: mongoose.Schema.Types.ObjectId,
+      type: Object,
       ref: "Recipe", // Reference to Recipe collection
     },
   ],

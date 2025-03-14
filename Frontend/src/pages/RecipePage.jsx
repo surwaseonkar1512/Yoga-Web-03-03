@@ -2,6 +2,8 @@ import React, { useEffect, useState } from "react";
 import { getRecipes } from "../services/operations/Recipe";
 import { Link } from "react-router-dom";
 import { toast } from "react-toastify";
+import { saveRecipe } from "../services/operations/Profile";
+import { useSelector } from "react-redux";
 
 const RecipePage = () => {
   const [recipes, setRecipes] = useState([]);
@@ -9,6 +11,8 @@ const RecipePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTag, setSelectedTag] = useState("");
   const [timeFilter, setTimeFilter] = useState("");
+     const { user } = useSelector((state) => state.profile);
+   
 
   useEffect(() => {
     fetchRecipes();
@@ -54,7 +58,23 @@ const RecipePage = () => {
 
     setFilteredRecipes(updatedRecipes);
   };
+  const handleSaveRecipe = async (recipeId) => {
+    if (!user || !user._id) {
+      setError("User not found. Please log in.");
+      return;
+    }
 
+    const response = await saveRecipe({
+      userId: user._id,
+      recipeId: recipeId,
+    });
+
+    if (response.success) {
+      console.log("recipe  saved successfully!");
+    } else {
+      setError(response.message || "Failed to save recipe .");
+    }
+  };
   return (
     <div className="container mx-auto p-6 mt-20">
       <h2 className="text-3xl font-bold mb-6 text-gray-800 text-center">
@@ -101,7 +121,7 @@ const RecipePage = () => {
         {filteredRecipes.map((recipe) => (
           <div
             key={recipe._id}
-            className="p-6 border rounded-lg shadow-lg bg-white hover:shadow-xl transition-all duration-300 h-full flex flex-col"
+            className="relative p-6 border rounded-lg shadow-lg bg-white hover:shadow-xl transition-all duration-300 h-full flex flex-col"
           >
             {/* Image Section */}
             <div className="relative">
@@ -114,7 +134,14 @@ const RecipePage = () => {
                 {recipe.cook_time} min
               </div>
             </div>
-
+            <div
+              onClick={() => {
+                handleSaveRecipe(recipe._id);
+              }}
+              className=" cursor-pointer absolute top-2 right-2 bg-green-800 text-white px-3 py-1 text-sm rounded-lg shadow"
+            >
+              save
+            </div>
             {/* Content Section */}
             <div className="flex-1 flex flex-col mt-4">
               <h3 className="text-lg font-semibold text-gray-800">

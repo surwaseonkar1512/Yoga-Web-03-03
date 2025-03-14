@@ -2,7 +2,8 @@ const Profile = require("../models/Profile");
 const User = require("../models/User");
 const { uploadImageToCloudinary } = require("../utils/imageUploader");
 const mongoose = require("mongoose");
-
+const Yoga = require("../models/Yoga");
+const Recipe = require("../models/Recipe");
 // Method for updating a profile
 exports.updateProfile = async (req, res) => {
   try {
@@ -180,19 +181,19 @@ exports.updateDisplayPicture = async (req, res) => {
 };
 
 // Save a Yoga Pose
+
 exports.saveYogaPose = async (req, res) => {
   try {
     const { userId, yogaPoseId } = req.body;
 
     if (!userId || !yogaPoseId) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "User ID and Yoga Pose ID are required",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "User ID and Yoga Pose ID are required",
+      });
     }
 
+    // Find user and profile
     const user = await User.findById(userId).populate("additionalDetails");
     if (!user || !user.additionalDetails) {
       return res
@@ -200,19 +201,31 @@ exports.saveYogaPose = async (req, res) => {
         .json({ success: false, message: "User profile not found" });
     }
 
-    const profile = user.additionalDetails;
-    if (!profile.savedYogaPoses.includes(yogaPoseId)) {
-      profile.savedYogaPoses.push(yogaPoseId);
+    const profile = await Profile.findById(user.additionalDetails._id);
+
+    // Find the full Yoga pose details
+    const yogaPose = await Yoga.findById(yogaPoseId);
+    if (!yogaPose) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Yoga pose not found" });
+    }
+
+    // Check if the yoga pose is already saved
+    const isAlreadySaved = profile.savedYogaPoses.some(
+      (pose) => pose._id.toString() === yogaPoseId
+    );
+
+    if (!isAlreadySaved) {
+      profile.savedYogaPoses.push(yogaPose);
       await profile.save();
     }
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Yoga pose saved successfully",
-        data: profile,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Yoga pose saved successfully",
+      data: profile.savedYogaPoses, // Now includes full yoga pose details
+    });
   } catch (error) {
     console.error("Save Yoga Pose Error:", error);
     res.status(500).json({ success: false, message: "Internal server error" });
@@ -225,12 +238,10 @@ exports.removeYogaPose = async (req, res) => {
     const { userId, yogaPoseId } = req.body;
 
     if (!userId || !yogaPoseId) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "User ID and Yoga Pose ID are required",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "User ID and Yoga Pose ID are required",
+      });
     }
 
     const user = await User.findById(userId).populate("additionalDetails");
@@ -242,17 +253,15 @@ exports.removeYogaPose = async (req, res) => {
 
     const profile = user.additionalDetails;
     profile.savedYogaPoses = profile.savedYogaPoses.filter(
-      (id) => id.toString() !== yogaPoseId
+      (pose) => pose._id.toString() !== yogaPoseId
     );
     await profile.save();
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Yoga pose removed successfully",
-        data: profile,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Yoga pose removed successfully",
+      data: profile,
+    });
   } catch (error) {
     console.error("Remove Yoga Pose Error:", error);
     res.status(500).json({ success: false, message: "Internal server error" });
@@ -265,14 +274,13 @@ exports.saveRecipe = async (req, res) => {
     const { userId, recipeId } = req.body;
 
     if (!userId || !recipeId) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "User ID and Recipe ID are required",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "User ID and Recipe ID are required",
+      });
     }
 
+    // Find user and profile
     const user = await User.findById(userId).populate("additionalDetails");
     if (!user || !user.additionalDetails) {
       return res
@@ -280,19 +288,31 @@ exports.saveRecipe = async (req, res) => {
         .json({ success: false, message: "User profile not found" });
     }
 
-    const profile = user.additionalDetails;
-    if (!profile.savedRecipes.includes(recipeId)) {
-      profile.savedRecipes.push(recipeId);
+    const profile = await Profile.findById(user.additionalDetails._id);
+
+    // Find the full Recipe details
+    const recipe = await Recipe.findById(recipeId);
+    if (!recipe) {
+      return res
+        .status(404)
+        .json({ success: false, message: "Recipe not found" });
+    }
+
+    // Check if the recipe is already saved
+    const isAlreadySaved = profile.savedRecipes.some(
+      (savedRecipe) => savedRecipe._id.toString() === recipeId
+    );
+
+    if (!isAlreadySaved) {
+      profile.savedRecipes.push(recipe); // Store full recipe data
       await profile.save();
     }
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Recipe saved successfully",
-        data: profile,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Recipe saved successfully",
+      data: profile.savedRecipes, // Now includes full recipe details
+    });
   } catch (error) {
     console.error("Save Recipe Error:", error);
     res.status(500).json({ success: false, message: "Internal server error" });
@@ -305,12 +325,10 @@ exports.removeRecipe = async (req, res) => {
     const { userId, recipeId } = req.body;
 
     if (!userId || !recipeId) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "User ID and Recipe ID are required",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "User ID and Recipe ID are required",
+      });
     }
 
     const user = await User.findById(userId).populate("additionalDetails");
@@ -322,17 +340,15 @@ exports.removeRecipe = async (req, res) => {
 
     const profile = user.additionalDetails;
     profile.savedRecipes = profile.savedRecipes.filter(
-      (id) => id.toString() !== recipeId
+      (recipe) => recipe._id.toString() !== recipeId
     );
     await profile.save();
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Recipe removed successfully",
-        data: profile,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Recipe removed successfully",
+      data: profile,
+    });
   } catch (error) {
     console.error("Remove Recipe Error:", error);
     res.status(500).json({ success: false, message: "Internal server error" });
@@ -345,12 +361,10 @@ exports.addGeneralEntry = async (req, res) => {
     const { userId, title, content } = req.body;
 
     if (!userId || !title || !content) {
-      return res
-        .status(400)
-        .json({
-          success: false,
-          message: "User ID, title, and content are required",
-        });
+      return res.status(400).json({
+        success: false,
+        message: "User ID, title, and content are required",
+      });
     }
 
     const user = await User.findById(userId).populate("additionalDetails");
@@ -364,13 +378,11 @@ exports.addGeneralEntry = async (req, res) => {
     profile.generals.push({ title, content, date: new Date() });
     await profile.save();
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "General entry added successfully",
-        data: profile,
-      });
+    res.status(200).json({
+      success: true,
+      message: "General entry added successfully",
+      data: profile,
+    });
   } catch (error) {
     console.error("Add General Entry Error:", error);
     res.status(500).json({ success: false, message: "Internal server error" });
@@ -401,13 +413,11 @@ exports.removeGeneralEntry = async (req, res) => {
     );
     await profile.save();
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "General entry removed successfully",
-        data: profile,
-      });
+    res.status(200).json({
+      success: true,
+      message: "General entry removed successfully",
+      data: profile,
+    });
   } catch (error) {
     console.error("Remove General Entry Error:", error);
     res.status(500).json({ success: false, message: "Internal server error" });
