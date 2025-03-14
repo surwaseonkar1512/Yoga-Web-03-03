@@ -5,6 +5,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { setUser } from "../../slices/profileSlice";
 import { setToken } from "../../slices/authSlice";
+import logo from "../../assets/logo.png";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -55,7 +56,9 @@ const Navbar = () => {
     >
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
         {/* Logo */}
-        <div className="text-textPrimary text-2xl font-bold">Yogahar </div>
+        <div className="text-textPrimary text-2xl font-bold">
+          <img src={logo} alt="" className="h-[50px] w-full object-contain pl-16" />
+        </div>
 
         {/* Navigation Menu - Desktop */}
         <ul className="hidden md:flex space-x-6">

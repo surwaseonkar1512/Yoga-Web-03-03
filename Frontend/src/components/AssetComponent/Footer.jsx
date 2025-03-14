@@ -6,6 +6,7 @@ import {
   FaPinterestP,
 } from "react-icons/fa";
 import { MdEmail, MdCall } from "react-icons/md";
+import logo from "../../assets/logo.png";
 
 const Footer = () => {
   return (
@@ -15,7 +16,13 @@ const Footer = () => {
           {/* About Section */}
           <div>
             <h2 className="text-2xl font-bold flex items-center space-x-2">
-              <span className="text-white">Yogahar </span>
+              <span className="text-white">
+                <img
+                  src={logo}
+                  alt="yogaharlogo"
+                  className="h-[35px] object-contain w-full"
+                />
+              </span>
             </h2>
             <p className="text-gray-400 mt-3 leading-relaxed">
               Far far away, behind the word mountains, far from countries
