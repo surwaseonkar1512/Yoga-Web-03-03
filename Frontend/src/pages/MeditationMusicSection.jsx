@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 
 const MeditationMusicSection = () => {
   const [songs, setSongs] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [currentAudio, setCurrentAudio] = useState(null);
   const [playingSong, setPlayingSong] = useState(null);
+  const audioRef = useRef(null);
 
   useEffect(() => {
     const fetchSongs = async () => {
@@ -18,9 +18,6 @@ const MeditationMusicSection = () => {
         }
         const result = await response.json();
         setSongs(result.data.results || []);
-        if (result.data.results.length > 0) {
-          setPlayingSong(result.data.results[3]);
-        }
       } catch (error) {
         setError(error.message);
       } finally {
@@ -30,14 +27,20 @@ const MeditationMusicSection = () => {
     fetchSongs();
   }, []);
 
-  const handlePlay = (event, song) => {
-    if (currentAudio && currentAudio !== event.target) {
-      currentAudio.pause();
-      currentAudio.currentTime = 0;
+  const handleSongSelect = (song) => {
+    if (playingSong?.id !== song.id) {
+      setPlayingSong(song);
+      if (audioRef.current) {
+        audioRef.current.pause();
+        audioRef.current.load(); // Load the new song but don't play automatically
+      }
     }
-    event.target.play();
-    setCurrentAudio(event.target);
-    setPlayingSong(song);
+  };
+
+  const handlePlay = () => {
+    if (audioRef.current) {
+      audioRef.current.play();
+    }
   };
 
   if (loading) return <p className="h-screen text-center py-10">Loading...</p>;
@@ -61,8 +64,10 @@ const MeditationMusicSection = () => {
             {songs.map((song, index) => (
               <li
                 key={index}
-                className="flex items-center py-2 cursor-pointer hover:bg-gray-200 rounded-lg p-2"
-                onClick={() => setPlayingSong(song)}
+                className={`flex items-center py-2 cursor-pointer hover:bg-gray-200 rounded-lg p-2 ${
+                  playingSong?.id === song.id ? "bg-gray-300" : ""
+                }`}
+                onClick={() => handleSongSelect(song)}
               >
                 <img
                   src={song.image?.[0]?.url}
@@ -79,12 +84,13 @@ const MeditationMusicSection = () => {
         </div>
 
         <div className="md:w-3/4 w-full mt-6 md:mt-0 md:pl-6">
-          {playingSong && (
+          {playingSong ? (
             <div className="bg-white shadow-lg p-4 rounded-lg overflow-hidden">
               <h3 className="text-lg font-bold mb-4 text-center md:text-left">
                 Now Playing
               </h3>
               <div className="flex flex-col md:flex-row gap-4">
+                {/* Image Section */}
                 <div className="md:w-1/2">
                   <img
                     src={playingSong.image?.[1]?.url}
@@ -92,6 +98,7 @@ const MeditationMusicSection = () => {
                     className="w-full h-64 md:h-[70vh] object-cover rounded-lg"
                   />
                 </div>
+                {/* Song Details */}
                 <div className="md:w-1/2">
                   <p className="text-xl font-bold">{playingSong.name}</p>
                   <p className="text-gray-600">
@@ -105,25 +112,30 @@ const MeditationMusicSection = () => {
                   <p className="text-gray-500">
                     Language: {playingSong.language}
                   </p>
+                  {/* Audio Player */}
                   <audio
+                    key={playingSong?.id}
                     controls
-                    autoPlay
                     className="w-full mt-2"
-                    onPlay={(event) => handlePlay(event, playingSong)}
+                    ref={audioRef}
+                    onPlay={handlePlay}
                   >
                     <source
                       src={playingSong.downloadUrl[0]?.url}
                       type="audio/mpeg"
                     />
                   </audio>
+                  {/* Related Songs */}
                   <div>
                     <h3 className="text-lg font-bold mt-6">Related Songs</h3>
                     <div className="grid grid-cols-2 md:grid-cols-3 gap-2">
                       {songs.map((song, index) => (
                         <div
                           key={index}
-                          className="flex items-center py-2 cursor-pointer hover:bg-gray-200 rounded-lg p-2"
-                          onClick={() => setPlayingSong(song)}
+                          className={`flex items-center py-2 cursor-pointer hover:bg-gray-200 rounded-lg p-2 ${
+                            playingSong?.id === song.id ? "bg-gray-300" : ""
+                          }`}
+                          onClick={() => handleSongSelect(song)}
                         >
                           <img
                             src={song.image?.[0]?.url}
@@ -142,6 +154,14 @@ const MeditationMusicSection = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          ) : (
+            <div className="p-4">
+              {/* Skeleton Loader */}
+
+              <p className="text-gray-500 text-center text-3xl mt-4">
+                Please select a song
+              </p>
             </div>
           )}
         </div>

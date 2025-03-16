@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { getRecipes } from "../services/operations/Recipe";
 import { Link } from "react-router-dom";
-import { toast } from "react-toastify";
+import toast from "react-hot-toast";
 import { saveRecipe } from "../services/operations/Profile";
 import { useSelector } from "react-redux";
+import { MdBookmarkAdd } from "react-icons/md";
 
 const RecipePage = () => {
   const [recipes, setRecipes] = useState([]);
@@ -11,8 +12,8 @@ const RecipePage = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTag, setSelectedTag] = useState("");
   const [timeFilter, setTimeFilter] = useState("");
-     const { user } = useSelector((state) => state.profile);
-   
+  const [loading, setLoading] = useState(true); // Add loading state
+  const { user } = useSelector((state) => state.profile);
 
   useEffect(() => {
     fetchRecipes();
@@ -20,6 +21,7 @@ const RecipePage = () => {
 
   const fetchRecipes = async () => {
     try {
+      setLoading(true);
       const response = await getRecipes();
       if (response) {
         setRecipes(response?.data);
@@ -28,6 +30,8 @@ const RecipePage = () => {
     } catch (error) {
       console.error("Error fetching recipes:", error);
       toast.error("Failed to fetch recipes");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -58,9 +62,10 @@ const RecipePage = () => {
 
     setFilteredRecipes(updatedRecipes);
   };
+
   const handleSaveRecipe = async (recipeId) => {
     if (!user || !user._id) {
-      setError("User not found. Please log in.");
+      toast.error("User not found. Please log in.");
       return;
     }
 
@@ -69,17 +74,23 @@ const RecipePage = () => {
       recipeId: recipeId,
     });
 
-    if (response.success) {
-      console.log("recipe  saved successfully!");
+    if (response) {
+      toast.success("Recipe saved successfully!");
     } else {
-      setError(response.message || "Failed to save recipe .");
+      toast.error("Failed to save recipe.");
     }
   };
+
   return (
     <div className="container mx-auto p-6 mt-20">
-      <h2 className="text-3xl font-bold mb-6 text-gray-800 text-center">
-        Delicious Recipes
-      </h2>
+      <div className="text-center mb-8 md:mb-12">
+        <span className="px-4 py-2 bg-green-800 text-white font-semibold rounded-full">
+          Delicious Recipes
+        </span>
+        <h2 className="text-3xl md:text-4xl font-bold mt-4">
+          Savor the Flavor, Love Every Bite!
+        </h2>
+      </div>
 
       {/* Search and Filter Section */}
       <div className="flex flex-wrap gap-4 justify-center mb-8">
@@ -118,49 +129,63 @@ const RecipePage = () => {
 
       {/* Recipes Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-        {filteredRecipes.map((recipe) => (
-          <div
-            key={recipe._id}
-            className="relative p-6 border rounded-lg shadow-lg bg-white hover:shadow-xl transition-all duration-300 h-full flex flex-col"
-          >
-            {/* Image Section */}
-            <div className="relative">
-              <img
-                src={recipe.image}
-                alt={recipe.title}
-                className="w-full h-56 object-cover rounded-lg"
-              />
-              <div className="absolute top-2 left-2 bg-green-600 text-white px-3 py-1 text-sm rounded-lg shadow">
-                {recipe.cook_time} min
-              </div>
-            </div>
-            <div
-              onClick={() => {
-                handleSaveRecipe(recipe._id);
-              }}
-              className=" cursor-pointer absolute top-2 right-2 bg-green-800 text-white px-3 py-1 text-sm rounded-lg shadow"
-            >
-              save
-            </div>
-            {/* Content Section */}
-            <div className="flex-1 flex flex-col mt-4">
-              <h3 className="text-lg font-semibold text-gray-800">
-                {recipe.title}
-              </h3>
-              <p className="text-gray-600 mt-2 text-sm line-clamp-3 mb-5">
-                {recipe.description}
-              </p>
-
-              {/* Button Section */}
-              <Link
-                to={`/recipeDetailPage/${recipe.slug}`}
-                className="mt-auto my-4 block text-center bg-green-600 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition-all"
+        {loading
+          ? Array(6)
+              .fill(null)
+              .map((_, index) => (
+                <div
+                  key={index}
+                  className="p-6 border rounded-lg shadow-lg bg-gray-200 animate-pulse h-full"
+                >
+                  <div className="w-full h-56 bg-gray-300 rounded-lg"></div>
+                  <div className="h-6 w-3/4 bg-gray-400 rounded mt-4"></div>
+                  <div className="h-4 w-1/2 bg-gray-400 rounded mt-2"></div>
+                  <div className="h-10 bg-gray-400 rounded mt-4"></div>
+                </div>
+              ))
+          : filteredRecipes.map((recipe) => (
+              <div
+                key={recipe._id}
+                className="relative p-6 border rounded-lg shadow-lg bg-white hover:shadow-xl transition-all duration-300 h-full flex flex-col"
               >
-                View Recipe
-              </Link>
-            </div>
-          </div>
-        ))}
+                {/* Image Section */}
+                <div className="relative">
+                  <img
+                    src={recipe.image}
+                    alt={recipe.title}
+                    className="w-full h-56 object-cover rounded-lg"
+                  />
+                  <div className="absolute top-2 left-2 bg-green-800 text-white px-3 py-1 text-sm rounded-lg shadow">
+                    {recipe.cook_time} min
+                  </div>
+                </div>
+                <div
+                  onClick={() => {
+                    handleSaveRecipe(recipe._id);
+                  }}
+                  className="cursor-pointer absolute top-2 right-2 bg-green-800  text-white px-3 py-1 text-sm rounded-lg shadow"
+                >
+                  <MdBookmarkAdd size={20} />
+                </div>
+                {/* Content Section */}
+                <div className="flex-1 flex flex-col mt-4">
+                  <h3 className="text-lg font-semibold text-gray-800">
+                    {recipe.title}
+                  </h3>
+                  <p className="text-gray-600 mt-2 text-sm line-clamp-3 mb-5">
+                    {recipe.description}
+                  </p>
+
+                  {/* Button Section */}
+                  <Link
+                    to={`/recipeDetailPage/${recipe.slug}`}
+                    className="mt-auto my-4 block text-center bg-green-800 hover:bg-green-700 text-white font-semibold py-2 rounded-lg transition-all"
+                  >
+                    View Recipe
+                  </Link>
+                </div>
+              </div>
+            ))}
       </div>
     </div>
   );

@@ -26,8 +26,29 @@ const RecipeDetailPage = () => {
     fetchRecipe();
   }, [slug]);
 
-  if (loading)
-    return <p className="text-center h-screen text-lg">Loading...</p>;
+  if (loading) {
+    return (
+      <div className="h-screen flex flex-col items-center justify-center space-y-4 mt-40">
+        {/* Category Skeleton */}
+        <div className="w-48 h-10 bg-gray-300 rounded-lg animate-pulse"></div>
+
+        {/* Yoga Poses Grid Skeleton */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full px-6">
+          {[...Array(6)].map((_, index) => (
+            <div
+              key={index}
+              className="p-6 border rounded-lg shadow-lg bg-white animate-pulse"
+            >
+              <div className="w-full h-56 bg-gray-300 rounded-lg"></div>
+              <div className="h-6 bg-gray-300 rounded mt-4 w-3/4"></div>
+              <div className="h-4 bg-gray-300 rounded mt-2 w-5/6"></div>
+              <div className="h-4 bg-gray-300 rounded mt-2 w-2/3"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  }
   if (error) return <p className="text-center text-red-500">{error}</p>;
   if (!recipe)
     return <p className="text-center text-gray-500">No recipe found.</p>;
@@ -104,7 +125,7 @@ const RecipeDetailPage = () => {
               title="Recipe Video"
               frameBorder="0"
               allowFullScreen
-              className="w-full md:h-[600px] h-full rounded-lg shadow-md"
+              className="w-[85%] flex items-center justify-center md:h-[600px] h-full rounded-lg shadow-md"
             ></iframe>
           </div>
         </div>

@@ -93,7 +93,7 @@ const YogaDetailsPage = () => {
       </div>
 
       {yogaPose.videoLink && (
-        <div className="mt-8 w-full mx-auto px-6">
+        <div className="mt-8 w-full mx-auto px-6 py-20">
           <div className="w-full items-center justify-center flex my-5 ">
             <div className="relative md:text-3xl text-xl px-4 py-2 text-center bg-green-800 text-white font-semibold rounded-full z-10">
               Watch Video
@@ -105,7 +105,7 @@ const YogaDetailsPage = () => {
               title="Yoga Pose Video"
               frameBorder="0"
               allowFullScreen
-              className="w-full md:h-[600px] h-full rounded-lg shadow-md"
+              className="w-[85%] flex items-center justify-center md:h-[600px] h-full rounded-lg shadow-md"
             ></iframe>
           </div>
         </div>

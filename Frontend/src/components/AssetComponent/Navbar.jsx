@@ -13,6 +13,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { token } = useSelector((state) => state.auth);
+  const { user } = useSelector((state) => state.profile);
 
   // Detect scroll to apply blur effect
   useEffect(() => {
@@ -33,21 +34,15 @@ const Navbar = () => {
     { id: 6, name: "Nutrition", link: "/nutrition" },
     { id: 7, name: "Yoga Exercises", link: "/yoga-exercises" },
   ];
-
-  const handleLogout = () => {
-    dispatch(setToken(null));
-    dispatch(setUser(null));
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    localStorage.removeItem("accountType");
-
-    toast.success("Logged Out");
-    console.log("User logged out");
-
-    // Redirect to home page
-    navigate("/");
-  };
-
+  const colors = [
+    "bg-red-500",
+    "bg-blue-500",
+    "bg-yellow-500",
+    "bg-purple-500",
+    "bg-pink-500",
+    "bg-gray-500",
+  ];
+  const randomColor = colors[Math.floor(Math.random() * colors.length)];
   return (
     <nav
       className={`w-full fixed top-4 z-50 rounded-lg shadow-lg transition duration-300 ${
@@ -57,7 +52,11 @@ const Navbar = () => {
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
         {/* Logo */}
         <div className="text-textPrimary text-2xl font-bold">
-          <img src={logo} alt="" className="h-[50px] w-full object-contain pl-16" />
+          <img
+            src={logo}
+            alt=""
+            className="h-[50px] w-full object-contain pl-16"
+          />
         </div>
 
         {/* Navigation Menu - Desktop */}
@@ -78,16 +77,36 @@ const Navbar = () => {
         {token ? (
           <div className="flex gap-4">
             <Link to="/profile">
-              <button className="bg-green-800 text-white px-5 py-2 rounded-lg font-medium border border-primary transition duration-300 hidden md:block">
+              <button className="hidden md:flex flex-row items-center justify-center gap-3 bg-green-800 text-white px-5 py-2 rounded-lg font-medium border border-primary transition duration-300">
+                {user?.image ? (
+                  <img
+                    src={user.image}
+                    alt="Profile"
+                    className="object-cover w-8 h-8 border-2 border-white rounded-full shadow-md"
+                  />
+                ) : (
+                  <div
+                    className={`w-8 h-8 flex items-center justify-center ${randomColor} text-white font-bold border-2 border-white rounded-full shadow-md`}
+                  >
+                    {user?.firstName
+                      ? user.firstName
+                          .split(" ")
+                          .map((n) => n[0])
+                          .join("")
+                          .toUpperCase()
+                      : "U"}
+                  </div>
+                )}
                 Profile
               </button>
             </Link>
-            <button
-              onClick={handleLogout}
-              className="bg-red-600 text-white px-5 py-2 rounded-lg font-medium border border-primary transition duration-300 hidden md:block"
-            >
-              Logout
-            </button>
+
+            {/* <button
+                onClick={handleLogout}
+                className="bg-red-600 text-white px-5 py-2 rounded-lg font-medium border border-primary transition duration-300 hidden md:block"
+              >
+                Logout
+              </button> */}
           </div>
         ) : (
           <div className="flex flex-row items-center justify-center gap-1">
