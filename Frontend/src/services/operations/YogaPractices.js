@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "https://yoga-web-03-03.onrender.com/api";
-// const BASE_URL = "http://localhost:5000/api";
+// const BASE_URL = "https://yoga-web-03-03.onrender.com/api";
+const BASE_URL = "http://localhost:5000/api";
 
 export const getYogaPractice = async () => {
   try {
@@ -31,23 +31,19 @@ export const getYogaByCategory = async (id) => {
   }
 };
 
-export const createYogaPractices = async (categoryData) => {
+export const createYogaPractices = async (formData) => {
   try {
-    const formData = new FormData();
-    for (const key in categoryData) {
-      formData.append(key, categoryData[key]);
-    }
-
     const response = await axios.post(`${BASE_URL}/yogas`, formData, {
       headers: { "Content-Type": "multipart/form-data" },
     });
 
     return response.data;
   } catch (error) {
-    console.error("Error creating category:", error);
-    return { success: false, message: "Error creating category" };
+    console.error("Error creating yoga pose:", error);
+    return { success: false, message: "Error creating yoga pose" };
   }
 };
+
 export const deleteCategory = async (categoryId) => {
   try {
     const response = await axios.delete(`${BASE_URL}/yogas/${categoryId}`);

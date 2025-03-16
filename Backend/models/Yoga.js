@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const YogaSchema = new mongoose.Schema({
   category: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: Object,
     ref: "Category",
     required: true,
     index: true,

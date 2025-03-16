@@ -48,7 +48,6 @@ exports.createYoga = async (req, res) => {
       });
     }
 
-    // ✅ Upload images to Cloudinary
     const mainImageUrl = await uploadImageToCloudinary(
       mainImageFile,
       "yoga_poses"

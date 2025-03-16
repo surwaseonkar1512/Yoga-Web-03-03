@@ -87,23 +87,28 @@ const YogaForm = () => {
   };
   const onSubmit = async (data) => {
     try {
-      const response = await createYogaPractices({
-        category: data.category,
-        name: data.name,
-        slug: data.slug,
-        subHeading: data.subHeading,
-        infoSectionImage: data.infoSectionImage,
-        mainParagraph: data.mainParagraph,
-        totalTimeToPractice: data.totalTimeToPractice,
-        totalRepetitions: data.totalRepetitions,
-        videoLink: data.videoLink,
-        steps: JSON.stringify(data.steps),
-        benefits: JSON.stringify(data.benefits),
-        mainImage: imageFile,
-        infoImageFile: infoImageFile,
-        benefitImage: benefitImageFile,
-      });
-
+      const formData = new FormData();
+      
+      formData.append("category", data.category);
+      formData.append("name", data.name);
+      formData.append("slug", data.slug);
+      formData.append("subHeading", data.subHeading);
+      formData.append("mainParagraph", data.mainParagraph);
+      formData.append("totalTimeToPractice", data.totalTimeToPractice);
+      formData.append("totalRepetitions", data.totalRepetitions);
+      formData.append("videoLink", data.videoLink);
+  
+      // Convert JSON data before appending
+      formData.append("steps", JSON.stringify(data.steps));
+      formData.append("benefits", JSON.stringify(data.benefits));
+  
+      // Append image files correctly
+      if (imageFile) formData.append("mainImage", imageFile);
+      if (infoImageFile) formData.append("infoSectionImage", infoImageFile);
+      if (benefitImageFile) formData.append("benefitImage", benefitImageFile);
+  
+      const response = await createYogaPractices(formData);
+  
       if (response.success) {
         toast.success("Yoga pose created successfully!");
         reset();
@@ -117,6 +122,8 @@ const YogaForm = () => {
       toast.error("Failed to create yoga pose");
     }
   };
+  
+
   const handleDelete = async (categoryId) => {
     try {
       const response = await deleteCategory(categoryId);
@@ -147,7 +154,7 @@ const YogaForm = () => {
         </button>
       </div>
       {showForm ? (
-        <form onSubmit={handleSubmit(onSubmit)} className="py-6 gap-6">
+        <form onSubmit={handleSubmit(onSubmit)} className="py-16 gap-6">
           {/* Left Column */}
           <div className="space-y-4">
             {/* Category Dropdown */}
@@ -213,13 +220,13 @@ const YogaForm = () => {
                 required
               />
             </div>
-            <input
+            {/* <input
               {...register("infoSectionImage")}
               type="text"
               placeholder="Add infoSectionImage Link"
               className="w-full p-2 border rounded-lg"
               required
-            />
+            /> */}
 
             {/* Video Link */}
             <input
@@ -343,27 +350,29 @@ const YogaForm = () => {
                       className="w-full p-2 border rounded-lg"
                       required
                     />
-                    <button
-                      type="button"
-                      onClick={() =>
-                        appendStep({
-                          stepName: "",
-                          title: "",
-                          description: "",
-                          image: "",
-                        })
-                      }
-                      className="bg-green-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-green-600 transition-all mt-3 my-2"
-                    >
-                      Add Benefit
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => removeStep(index)}
-                      className="mt-2 bg-red-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-red-600 transition-all py-3"
-                    >
-                      Remove Step
-                    </button>
+                    <div className="flex flex-row items-center justify-between gap-4">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          appendStep({
+                            stepName: "",
+                            title: "",
+                            description: "",
+                            image: "",
+                          })
+                        }
+                        className="bg-green-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-green-600 transition-all mt-3 my-2"
+                      >
+                        Add step
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeStep(index)}
+                        className="mt-2 bg-red-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-red-600 transition-all "
+                      >
+                        Remove Step
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
@@ -394,27 +403,28 @@ const YogaForm = () => {
                       className="w-full p-2 border rounded-lg"
                       required
                     />
-                    <button
-                      type="button"
-                      onClick={() => removeBenefit(index)}
-                      className="mt-2 bg-red-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-red-600 transition-all py-3"
-                    >
-                      Remove Benefit
-                    </button>
-
-                    <button
-                      type="button"
-                      onClick={() =>
-                        appendBenefit({
-                          BenefitName: "",
-                          title: "",
-                          description: "",
-                        })
-                      }
-                      className="bg-green-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-green-600 transition-all mt-3 my-2"
-                    >
-                      Add Benefit
-                    </button>
+                    <div className="flex flex-row items-center justify-between gap-4">
+                      <button
+                        type="button"
+                        onClick={() =>
+                          appendBenefit({
+                            BenefitName: "",
+                            title: "",
+                            description: "",
+                          })
+                        }
+                        className="bg-green-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-green-600 transition-all mt-3 my-2"
+                      >
+                        Add Benefit
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => removeBenefit(index)}
+                        className="mt-2 bg-red-500 text-white px-3 py-1 rounded-lg shadow-md hover:bg-red-600 transition-all "
+                      >
+                        Remove Benefit
+                      </button>
+                    </div>
                   </div>
                 ))}
               </div>
