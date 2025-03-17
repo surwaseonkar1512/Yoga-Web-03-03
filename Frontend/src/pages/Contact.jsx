@@ -64,9 +64,9 @@ const Contact = () => {
         <div className="relative w-full md:w-1/2 flex justify-start z-10">
           <div className="relative w-[80%] md:w-[90%]">
             <img
-              src="https://gayu.wpengine.com/wp-content/uploads/2024/12/home1-banner-image-i1.png"
+              src="https://aasana.cwsthemes.com/wp-content/uploads/revslider/landing/slide2.png"
               alt="Contact Us"
-              className="w-full md:h-[800px] h-[300px] rounded-md object-contain drop-shadow-lg"
+              className="w-full md:h-[800px] h-[300px] rounded-md object-contain drop-shadow-lg rotate-90"
             />
           </div>
         </div>
