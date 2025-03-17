@@ -120,7 +120,7 @@ export function login(email, password, navigate) {
       if (response?.data?.user?.accountType === "Admin") {
         navigate("/admin-dashBoard");
       } else {
-        navigate("/my-profile");
+        navigate("/profile");
       }
     } catch (error) {
       console.log("LOGIN API ERROR............", error);

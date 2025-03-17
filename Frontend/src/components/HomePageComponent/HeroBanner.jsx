@@ -4,6 +4,7 @@ import { Autoplay, EffectFade } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/autoplay";
 import "swiper/css/effect-fade";
+import { Link } from "react-router-dom";
 
 const bannerData = [
   {
@@ -14,6 +15,7 @@ const bannerData = [
     description:
       "You cannot always control what goes on outside, but you can always control what goes on inside! Happy Yoga Day.",
     buttonText: "Contact Us",
+    link: "contact-us",
     pngImage:
       "https://yoge-demo.pbminfotech.com/demo3/wp-content/uploads/sites/4/revslider/slider-demo-03/demo3-slider-1.png",
   },
@@ -23,7 +25,8 @@ const bannerData = [
       "https://cdn.pixabay.com/photo/2020/08/22/12/36/yoga-5508336_1280.png",
     title: "Find Your Inner Peace.",
     description: "Embrace the journey of self-discovery and mindfulness.",
-    buttonText: "Join Now",
+    buttonText: "About Us",
+    link: "about-us",
     pngImage:
       "https://yoge-demo.pbminfotech.com/demo3/wp-content/uploads/sites/4/revslider/slider-demo-03/demo3-slider-2.png",
   },
@@ -102,9 +105,14 @@ const HeroBanner = () => {
                   {banner.title}
                 </h1>
                 <p className="mt-3 text-lg md:text-xl">{banner.description}</p>
-                <button className="mt-6 bg-white text-black px-6 py-3 rounded-full text-lg font-medium shadow-lg hover:bg-gray-200 transition">
+                <Link to={`/${banner.link}`}>
+
+                <button
+                  className="mt-6 bg-white text-black px-6 py-3 rounded-full text-lg font-medium shadow-lg hover:bg-gray-200 transition"
+                >
                   {banner.buttonText}
                 </button>
+                </Link>
               </div>
 
               {/* Right Image (Mobile Centered, Desktop Right-Aligned) */}
