@@ -5,7 +5,7 @@ const YogaSchema = new mongoose.Schema({
     type: Object,
     ref: "Category",
     required: true,
-    index: true,
+    index: true, 
   },
   name: {
     type: String,
@@ -18,7 +18,7 @@ const YogaSchema = new mongoose.Schema({
     unique: true,
   },
   mainImage: {
-    type: String, // Cloudinary or other image URL
+    type: String, 
     required: true,
   },
   infoSectionImage: {
