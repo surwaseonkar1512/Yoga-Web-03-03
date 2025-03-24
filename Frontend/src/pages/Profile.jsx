@@ -41,7 +41,7 @@ export default function ProfilePage() {
   const [logout, setLogout] = useState(false);
   const [activeTab, setActiveTab] = useState("Profile");
 
-  const tabs = ["Profile", "Yoga", "Recipes", "General"];
+  const tabs = ["Profile", "Yoga", "Recipes", "Journal"];
   const handleLogout = () => {
     dispatch(setToken(null));
     dispatch(setUser(null));
@@ -502,7 +502,7 @@ export default function ProfilePage() {
           </motion.div>
         </div>
       )}
-      {activeTab === "General" && (
+      {activeTab === "Journal" && (
         <div className="grid grid-cols-1  w-full gap-3">
           {addGeneral ? (
             <motion.div
@@ -514,7 +514,7 @@ export default function ProfilePage() {
               <div className="flex justify-between items-center mb-4">
                 <h2 className="text-xl text-green-800 font-bold">
                   {" "}
-                  Add General Content
+                  Add Journal Entry
                 </h2>
                 <button
                   className="bg-green-800 text-white px-4 py-2 rounded-full text-lg"
@@ -545,7 +545,7 @@ export default function ProfilePage() {
                   type="submit"
                   className="md:w-[30%] bg-green-800 hover:bg-green-700 text-white px-6 py-3 rounded-lg shadow-lg transition-all w-full"
                 >
-                  Add Content
+                  Add Journal Entry
                 </button>
               </form>
             </motion.div>
@@ -555,7 +555,7 @@ export default function ProfilePage() {
             <div className="flex justify-between items-center mb-4">
               <h2 className="text-xl text-green-800 font-bold">
                 {" "}
-                General Content
+                Journal Entries
               </h2>
               <button
                 className="bg-green-800 text-white px-4 py-2 rounded-full text-lg"
@@ -608,7 +608,7 @@ export default function ProfilePage() {
               </motion.ul>
             ) : (
               <p className="text-gray-300 mt-2">
-                No general content available.
+                No Journal content available.
               </p>
             )}
           </div>
