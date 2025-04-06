@@ -27,7 +27,7 @@ const MeditationMusicSection = () => {
     const fetchSongs = async () => {
       try {
         const response = await fetch(
-          "https://saavn-api-r2hu1.vercel.app/api/search/songs?query=meditation"
+          "https://saavn.dev/api/search/songs?query=meditation"
         );
         if (!response.ok) {
           throw new Error("Failed to fetch data");
