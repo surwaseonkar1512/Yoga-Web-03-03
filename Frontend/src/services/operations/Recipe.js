@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "https://yoga-web-03-03.onrender.com/api/recipes";
-// const BASE_URL = "http://localhost:5000/api/recipes";
+// const BASE_URL = "https://yoga-web-03-03.onrender.com/api/recipes";
+const BASE_URL = "http://localhost:5000/api/recipes";
 export const createRecipe = async (recipeData) => {
   try {
     const response = await axios.post(`${BASE_URL}/recipes`, recipeData, {
