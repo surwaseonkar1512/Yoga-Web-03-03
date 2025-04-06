@@ -39,28 +39,19 @@ const Footer = () => {
             <h3 className="text-lg font-semibold">Quick Links</h3>
             <div className="grid grid-cols-2 gap-2 mt-4">
               <a href="#" className="text-gray-400 hover:text-white transition">
-                Pricing
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition">
-                Become Instructor
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition">
-                Courses
+                About Us
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition">
                 Contact Us
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition">
-                FAQ
+                Meditation Music
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition">
-                Privacy Policy
+                Nutrition
               </a>
               <a href="#" className="text-gray-400 hover:text-white transition">
-                Terms of Service
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition">
-                Support Center
+                Yoga Exercises
               </a>
             </div>
           </div>
